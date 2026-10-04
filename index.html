@@ -4,6 +4,7 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Mzanzi Homework Assist - Grades 1-7</title>
 <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=OpenDyslexic:wght@400;700&display=swap" as="style">
 <style>
 :root{--y:#ffcc00;--b:#000}
 body{margin:0;font-family:Segoe UI,sans-serif;background:#fff5cc;color:#000}
@@ -17,8 +18,30 @@ button.yellow{background:var(--y);color:#000}
 #preview{max-width:100%;border:3px solid var(--y);border-radius:10px;margin-top:8px}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .hidden{display:none}
-.high-contrast{background:#000!important;color:#fff!important}
-.dyslexic{font-family:Comic Sans MS!important;letter-spacing:1.5px;background:#fef9e7!important}
+.accessibility-dropdown{padding:10px;border:2px solid #000;border-radius:8px;margin:8px 0;font-weight:bold}
+.mode-badge{background:var(--y);color:#000;padding:8px 12px;border-radius:6px;font-weight:bold;margin:4px 0;display:inline-block}
+
+/* Deaf Mode - Captions & Visual Alerts */
+.deaf-mode{border-left:6px solid #ff0000 !important}
+.deaf-mode .caption{background:#000;color:#fff;padding:8px;border-radius:4px;font-size:12px;margin:4px 0;font-weight:bold}
+
+/* Mute-Free Mode - Text only, no voice */
+.mute-free-mode input[type="text"]{border:2px solid #008800 !important}
+
+/* Blind Mode - High Contrast & Auto-read */
+.blind-mode{background:#000 !important;color:#fff !important}
+.blind-mode .card{background:#1a1a1a !important;border-color:#fff !important;color:#fff !important}
+.blind-mode button{background:#fff !important;color:#000 !important;border-color:#fff !important}
+.blind-mode button.yellow{background:#ffff00 !important;color:#000 !important}
+.blind-mode select{background:#1a1a1a !important;color:#fff !important;border-color:#fff !important}
+.blind-mode input{background:#1a1a1a !important;color:#fff !important;border-color:#fff !important}
+
+/* Dyslexia Mode - OpenDyslexic font & cream background */
+.dyslexia-mode{background:#fef9e7 !important;font-family:"OpenDyslexic", sans-serif !important;font-size:16px !important;letter-spacing:2px !important;line-height:1.8 !important}
+.dyslexia-mode .card{background:#fffef5 !important;border-color:#b8a886 !important}
+.dyslexia-mode button{background:var(--b) !important;color:var(--y) !important}
+
+select{padding:8px;border:2px solid #000;border-radius:8px;margin:4px}
 </style>
 </head>
 <body>
@@ -26,12 +49,6 @@ button.yellow{background:var(--y);color:#000}
 <h2 style="margin:0">🇿🇦 MZANZI HOMEWORK ASSIST</h2>
 <small>Grades 1-7 | English + 11 Languages</small><br>
 <span id="trialBadge" class="badge">Loading trial...</span>
-<div style="margin-top:6px">
-<button onclick="toggleAccess('deaf')">🦻 Deaf</button>
-<button onclick="toggleAccess('mute')">🤐 Mute-Free</button>
-<button onclick="toggleAccess('blind')">👁️ Blind</button>
-<button onclick="toggleAccess('dys')">📖 Dyslexia</button>
-</div>
 </header>
 
 <div id="activateScreen" class="card hidden">
@@ -53,15 +70,28 @@ button.yellow{background:var(--y);color:#000}
 </div>
 
 <div id="dash-child" class="card">
-<h3>Child Dashboard - <span id="learningBadge" class="badge">Learning: Unknown</span></h3>
+<h3>Child Dashboard</h3>
+<div style="display:flex;justify-content:space-between;align-items:center">
+  <span id="learningBadge" class="badge">Learning: Unknown</span>
+  <div>
+    <label for="childNeed" style="font-weight:bold;margin-right:8px">My Learning Need:</label>
+    <select id="childNeed" class="accessibility-dropdown" onchange="applyAccessibility('child')">
+      <option value="normal">Normal</option>
+      <option value="deaf">Deaf</option>
+      <option value="mute-free">Mute-Free</option>
+      <option value="blind">Blind</option>
+      <option value="dyslexia">Dyslexia</option>
+    </select>
+    <span id="childModeDisplay" class="mode-badge">Mode: Normal</span>
+  </div>
+</div>
 <div class="grid">
 <select id="grade"><option>Grade 1</option><option>Grade 2</option><option>Grade 3</option><option>Grade 4</option><option>Grade 5</option><option>Grade 6</option><option>Grade 7</option></select>
 <select id="subject"><option>Maths</option><option>English</option><option>Natural Science</option><option>Life Skills</option></select>
 </div>
 <input id="childName" placeholder="Child Name" style="width:95%;margin-top:8px;padding:10px;border:2px solid #000;border-radius:8px">
 <select id="homeLang" style="width:98%;margin-top:8px;padding:10px;border:2px solid #000;border-radius:8px">
-<option value="en">English (Master)</option><option value="zu">isiZulu</option><option value="xh">isiXhosa</option><option value="af">Afrikaans</option><option value="nso">Sepedi</option><option value="st">Sesotho</option><option value="tn">Setswana</option><option value="ss">siSwati</option><option value="ve">Tshivenda</option><option value="ts">Xitsonga</option><option value="nr">isiNdebele</option><option value="sasl">SA Sign Language</option>
-</select>
+<option value="en">English (Master)</option><option value="zu">isiZulu</option><option value="xh">isiXhosa</option><option value="af">Afrikaans</option><option value="nso">Sepedi</option><option value="st">Sesotho</option><option value="ss">siSwati</option><option value="nr">isiNdebele</option><option value="tn">Setswana</option><option value="ts">Xitsonga</option><option value="ve">Tshivenda</option><option value="tw">Twi</option></select>
 <br><br>
 <button onclick="startLearningTest()">🧠 Test My Learning Style (8 Q)</button>
 <div id="learnTest" class="hidden"></div>
@@ -71,7 +101,7 @@ button.yellow{background:var(--y);color:#000}
 <img id="preview" class="hidden">
 <div id="ocrStatus"></div>
 <div id="resultTabs" class="hidden">
-<div><span class="tab active" onclick="openTab('original')">Original</span><span class="tab" onclick="openTab('trans')">Transliteration</span><span class="tab" onclick="openTab('meaning')">Meaning</span><span class="tab" onclick="openTab('translated')">Native</span></div>
+<div><span class="tab active" onclick="openTab('original')">Original</span><span class="tab" onclick="openTab('trans')">Transliteration</span><span class="tab" onclick="openTab('meaning')">Meaning</span><span class="tab" onclick="openTab('translated')">Translated</span></div>
 <div id="tab-original" class="card"></div>
 <div id="tab-trans" class="card hidden"></div>
 <div id="tab-meaning" class="card hidden"></div>
@@ -80,7 +110,8 @@ button.yellow{background:var(--y);color:#000}
 <h4>📚 Vocabulary</h4>
 <div id="vocab"></div>
 <h4>📝 4-Step Plan</h4>
-<ol><li>Read <button onclick="checkStep(1)">Done</button></li><li>Meaning <button onclick="checkStep(2)">Done</button></li><li>Vocab <button onclick="checkStep(3)">Done</button></li><li>Practice <div id="practiceQ"></div><button onclick="checkStep(4)">Done</button></li></ol>
+<ol><li>Read <button onclick="checkStep(1)">Done</button></li><li>Meaning <button onclick="checkStep(2)">Done</button></li><li>Vocab <button onclick="checkStep(3)">Done</button></li><li>Practice <button onclick="checkStep(4)">Done</button></li></ol>
+<div id="practiceQ"></div>
 <div>Progress: <progress id="prog" value="0" max="4"></progress></div>
 <button onclick="genWorksheet()">📄 Create 10 Practice</button>
 <button onclick="whatsappReport()">🟢 WhatsApp Report</button>
@@ -92,8 +123,22 @@ Self Score: <select id="selfScore"><option>1</option><option>2</option><option>3
 
 <div id="dash-parent" class="card hidden">
 <h3>Parent Assist</h3>
+<div style="display:flex;justify-content:space-between;align-items:center">
+  <span></span>
+  <div>
+    <label for="parentNeed" style="font-weight:bold;margin-right:8px">My Access Need:</label>
+    <select id="parentNeed" class="accessibility-dropdown" onchange="applyAccessibility('parent')">
+      <option value="normal">Normal</option>
+      <option value="deaf">Deaf</option>
+      <option value="mute-free">Mute-Free</option>
+      <option value="blind">Blind</option>
+      <option value="dyslexia">Dyslexia</option>
+    </select>
+    <span id="parentModeDisplay" class="mode-badge">Mode: Normal</span>
+  </div>
+</div>
 <p id="parentMethod">Method will show after learning test.</p>
-<button onclick="speechSynthesis.speak(new SpeechSynthesisUtterance(document.getElementById('parentMethod').innerText))">🔊 Voice Instruction</button><br><br>
+<button onclick="speakParentMethod()">🔊 Voice Instruction</button><br><br>
 Parent Score: <select id="parentScore"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
 <button onclick="alert('Saved')">Save</button>
 <button class="yellow" onclick="showDash('child')">Back</button>
@@ -101,6 +146,20 @@ Parent Score: <select id="parentScore"><option>1</option><option>2</option><opti
 
 <div id="dash-teacher" class="card hidden">
 <h3>Teacher Dashboard</h3>
+<div style="display:flex;justify-content:space-between;align-items:center">
+  <span></span>
+  <div>
+    <label for="teacherNeed" style="font-weight:bold;margin-right:8px">My Access Need:</label>
+    <select id="teacherNeed" class="accessibility-dropdown" onchange="applyAccessibility('teacher')">
+      <option value="normal">Normal</option>
+      <option value="deaf">Deaf</option>
+      <option value="mute-free">Mute-Free</option>
+      <option value="blind">Blind</option>
+      <option value="dyslexia">Dyslexia</option>
+    </select>
+    <span id="teacherModeDisplay" class="mode-badge">Mode: Normal</span>
+  </div>
+</div>
 <div id="teacherPatterns"></div>
 <textarea placeholder="Feedback" style="width:95%;padding:10px"></textarea><br>
 <button>Save Feedback</button>
@@ -117,6 +176,70 @@ Parent Score: <select id="parentScore"><option>1</option><option>2</option><opti
 </div>
 
 <script>
+// Clear old localStorage keys on first load
+function clearOldAccessibilityKeys(){
+  if(!localStorage.getItem('accessibilityKeysCleared')){
+    localStorage.removeItem('deaf');
+    localStorage.removeItem('mute');
+    localStorage.removeItem('blind');
+    localStorage.removeItem('dys');
+    localStorage.removeItem('dyslexic');
+    localStorage.removeItem('high-contrast');
+    localStorage.setItem('accessibilityKeysCleared','true');
+  }
+}
+clearOldAccessibilityKeys();
+
+// Initialize accessibility dropdowns from localStorage
+function initializeAccessibility(){
+  const childNeed=localStorage.getItem('childNeed')||'normal';
+  const parentNeed=localStorage.getItem('parentNeed')||'normal';
+  const teacherNeed=localStorage.getItem('teacherNeed')||'normal';
+  
+  document.getElementById('childNeed').value=childNeed;
+  document.getElementById('parentNeed').value=parentNeed;
+  document.getElementById('teacherNeed').value=teacherNeed;
+}
+
+// Apply accessibility mode to specific dashboard
+function applyAccessibility(dashboard){
+  const needSelect=document.getElementById(dashboard+'Need');
+  const modeValue=needSelect.value;
+  const dashElement=document.getElementById('dash-'+dashboard);
+  const modeBadge=document.getElementById(dashboard+'ModeDisplay');
+  
+  // Save to localStorage
+  localStorage.setItem(dashboard+'Need',modeValue);
+  
+  // Remove all accessibility classes
+  dashElement.classList.remove('deaf-mode','mute-free-mode','blind-mode','dyslexia-mode');
+  
+  // Update mode badge
+  if(modeValue==='normal'){
+    modeBadge.innerText='Mode: Normal';
+  }else if(modeValue==='deaf'){
+    dashElement.classList.add('deaf-mode');
+    modeBadge.innerText='Mode: Deaf (Captions & Visual Alerts)';
+  }else if(modeValue==='mute-free'){
+    dashElement.classList.add('mute-free-mode');
+    modeBadge.innerText='Mode: Mute-Free (Text Input Only)';
+  }else if(modeValue==='blind'){
+    dashElement.classList.add('blind-mode');
+    modeBadge.innerText='Mode: Blind (High Contrast & Auto-Read)';
+    // Auto-read the dashboard content
+    setTimeout(()=>{
+      const text=dashElement.innerText;
+      if(text){
+        const utterance=new SpeechSynthesisUtterance(text.substring(0,500));
+        speechSynthesis.speak(utterance);
+      }
+    },500);
+  }else if(modeValue==='dyslexia'){
+    dashElement.classList.add('dyslexia-mode');
+    modeBadge.innerText='Mode: Dyslexia (OpenDyslexic Font)';
+  }
+}
+
 let trialStart=localStorage.getItem('trialStart')||Date.now();
 if(!localStorage.getItem('trialStart'))localStorage.setItem('trialStart',trialStart);
 trialStart=parseInt(localStorage.getItem('trialStart'));
@@ -133,6 +256,7 @@ if(!isPaid&&(daysPassed>=10))lockApp();
 function lockApp(){document.getElementById('activateScreen').classList.remove('hidden');document.getElementById('mainApp').classList.add('hidden');}
 function unlockApp(){document.getElementById('activateScreen').classList.add('hidden');document.getElementById('mainApp').classList.remove('hidden');}
 updateTrialBadge();
+initializeAccessibility();
 function getFP(){return btoa(navigator.userAgent+screen.width+screen.height).slice(0,30);}
 let params=new URLSearchParams(location.search);
 if(params.get('activate')){
@@ -146,15 +270,15 @@ if(!code.startsWith('MZANZI-')){document.getElementById('actMsg').innerText='Inv
 localStorage.setItem('mzanzi_license',code);localStorage.setItem('licenseFP',getFP());localStorage.setItem('isPaid','true');isPaid=true;unlockApp();updateTrialBadge();
 }
 function buyNow(){window.open('https://wa.me/27820000000?text=Hi%20I%20want%20Mzanzi%20App','_blank');}
-function showDash(which){document.querySelectorAll('[id^=dash-]').forEach(d=>d.classList.add('hidden'));document.getElementById('dash-'+which).classList.remove('hidden');}
+function showDash(which){document.querySelectorAll('[id^=dash-]').forEach(d=>d.classList.remove('deaf-mode','mute-free-mode','blind-mode','dyslexia-mode'));document.querySelectorAll('[id^=dash-]').forEach(d=>d.classList.add('hidden'));document.getElementById('dash-'+which).classList.remove('hidden');applyAccessibility(which);}
 function showAdmin(){document.querySelectorAll('[id^=dash-]').forEach(d=>d.classList.add('hidden'));document.getElementById('dash-admin').classList.remove('hidden');}
-function genLink(){let p=document.getElementById('adminPhone').value.replace(/[^0-9]/g,'');let rnd=Math.floor(1000+Math.random()*9000);let code=`MZANZI-${p}-${rnd}`;let link=location.origin+location.pathname+'?activate='+code;document.getElementById('adminLink').innerHTML=`Code: <b>${code}</b><br>Link: <a href='${link}'>${link}</a><br><button onclick="navigator.clipboard.writeText('${link}')">Copy</button>`;}
-function toggleAccess(t){if(t==='blind'){document.body.classList.toggle('high-contrast');}if(t==='dys'){document.body.classList.toggle('dyslexic');}if(t==='deaf'){alert('Deaf Mode ON');}if(t==='mute'){alert('Mute-Free Mode ON');}}
+function genLink(){let p=document.getElementById('adminPhone').value.replace(/[^0-9]/g,'');let rnd=Math.floor(1000+Math.random()*9000);let code=`MZANZI-${p}-${rnd}`;let link=location.origin+location.pathname+'?activate='+code;document.getElementById('adminLink').innerHTML=`Link: <a href="${link}" target="_blank">${link}</a>`;}
 let currentTab='original';let currentText='';
 function openTab(name){currentTab=name;document.querySelectorAll('[id^=tab-]').forEach(d=>d.classList.add('hidden'));document.getElementById('tab-'+name).classList.remove('hidden');}
 function speakCurrent(){let txt=document.getElementById('tab-'+currentTab).innerText;let u=new SpeechSynthesisUtterance(txt);speechSynthesis.speak(u);}
+function speakParentMethod(){let txt=document.getElementById('parentMethod').innerText;let u=new SpeechSynthesisUtterance(txt);speechSynthesis.speak(u);}
 document.getElementById('photo').addEventListener('change',async(e)=>{
-if(!isPaid){let daysPassed=Math.floor((Date.now()-trialStart)/(1000*60*60*24));if(daysPassed>=10){lockApp();return;}if(scansToday>=5&&lastScanDate===new Date().toDateString()){alert('5 scans done today');return;}}
+if(!isPaid){let daysPassed=Math.floor((Date.now()-trialStart)/(1000*60*60*24));if(daysPassed>=10){lockApp();return;}if(scansToday>=5&&lastScanDate===new Date().toDateString()){alert('5 scans done today. Upgrade to paid.');return;}}
 let file=e.target.files[0];if(!file)return;
 let reader=new FileReader();reader.onload=function(ev){document.getElementById('preview').src=ev.target.result;document.getElementById('preview').classList.remove('hidden');};reader.readAsDataURL(file);
 document.getElementById('ocrStatus').innerText='🔍 Reading...';
@@ -162,7 +286,7 @@ try{
 let res=await Tesseract.recognize(file,'eng');let text=res.data.text;
 document.getElementById('tab-original').innerText=text;
 document.getElementById('tab-trans').innerText=text.toLowerCase()+' (easy read)';
-document.getElementById('tab-meaning').innerText='CAPS '+document.getElementById('grade').value+' '+document.getElementById('subject').value+': Means -> '+text.slice(0,200)+'. Step1 Read, Step2 Understand, Step3 Try.';
+document.getElementById('tab-meaning').innerText='CAPS '+document.getElementById('grade').value+' '+document.getElementById('subject').value+': Means -> '+text.slice(0,200)+'. Step1 Read, Step2 Understand, Step3 Vocab, Step4 Test';
 let home=document.getElementById('homeLang').value;
 document.getElementById('tab-translated').innerText='Translation ['+home+']: '+text;
 let words=text.split(/\s+/).filter(w=>w.length>4).slice(0,5);
@@ -185,13 +309,13 @@ let qs=[
 {q:'Maths?',opts:['Chart','Song','Formula','Sticks']},
 {q:'Bored?',opts:['Pics','Talk','Read','Play']}
 ];
-let html='<h4>Learning Test</h4>';qs.forEach((qq,i)=>{html+=`<div class="card"><b>Q${i+1} ${qq.q}</b><br>`;qq.opts.forEach((o,j)=>{html+=`<button onclick="pickQ(${j})">${o}</button>`;});html+='</div>';});html+='<button class="yellow" onclick="finishTest()">Finish</button>';document.getElementById('learnTest').innerHTML=html;document.getElementById('learnTest').classList.remove('hidden');
+let html='<h4>Learning Test</h4>';qs.forEach((qq,i)=>{html+=`<div class="card"><b>Q${i+1} ${qq.q}</b><br>`;qq.opts.forEach((o,j)=>{html+=`<button onclick="pickQ(${j})">${o}</button>`;});html+='</div>';});html+='<button onclick="finishTest()">Submit Test</button>';document.getElementById('learnTest').innerHTML=html;document.getElementById('learnTest').classList.remove('hidden');
 }
 function pickQ(j){if(j==0)vark.V++;if(j==1)vark.A++;if(j==2)vark.R++;if(j==3)vark.K++;}
 function finishTest(){
 let total=vark.V+vark.A+vark.R+vark.K||1;let type=`Visual ${Math.round(vark.V/total*100)}% | Auditory ${Math.round(vark.A/total*100)}% | Reading ${Math.round(vark.R/total*100)}% | Kinesthetic ${Math.round(vark.K/total*100)}%`;
 localStorage.setItem('learningType',type);document.getElementById('learningBadge').innerText=type;
-document.getElementById('parentMethod').innerText=`AI Report: Child learns best ${type}. Stick to one method 7 days. Plan: Day1-2 Visual, Day3 Practice, Day4 Parent, Day5 Teacher, Day6 Test, Day7 Certificate`;
+document.getElementById('parentMethod').innerText=`AI Report: Child learns best ${type}. Stick to one method 7 days. Plan: Day1-2 Visual, Day3 Practice, Day4 Parent, Day5 Teacher, Day6 Test, Day7 Repeat Top. Parent: Use same method for homework. Teacher: Update progress daily.`;
 document.getElementById('teacherPatterns').innerText=type;
 document.getElementById('learnTest').classList.add('hidden');alert('Saved: '+type);
 }
@@ -199,7 +323,7 @@ let steps=0;function checkStep(n){steps++;document.getElementById('prog').value=
 function finalCert(){
 let name=document.getElementById('childName').value||'Child';let grade=document.getElementById('grade').value;let score=document.getElementById('selfScore').value;let rating=score>=4?'Gold':score>=3?'Silver':'Bronze';
 document.getElementById('cert').classList.remove('hidden');
-document.getElementById('cert').innerHTML=`<h3>🏆 Certificate</h3><p>Name: ${name}<br>Grade: ${grade}<br>Score: ${score}/5<br>Learning: ${localStorage.getItem('learningType')||''}<br>Rating: ${rating}</p><button onclick="window.print()">Print</button>`;
+document.getElementById('cert').innerHTML=`<h3>🏆 Certificate</h3><p>Name: ${name}<br>Grade: ${grade}<br>Score: ${score}/5<br>Learning: ${localStorage.getItem('learningType')||''}<br>Rating: ${rating}<br>Date: ${new Date().toDateString()}</p>`;
 }
 function genWorksheet(){alert('10 practice questions generated');}
 function whatsappReport(){let name=document.getElementById('childName').value||'Child';let t=`Mzanzi Report - ${name} Learning: ${localStorage.getItem('learningType')||'Unknown'}`;window.open('https://wa.me/?text='+encodeURIComponent(t),'_blank');}
