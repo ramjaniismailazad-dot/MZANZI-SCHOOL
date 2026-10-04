@@ -1,1 +1,64 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MZANZI SA - Learning</title><style>body{font-family:Arial,sans-serif;background:#f4f4f4;margin:0;padding:0;text-align:center}.header{background:#000;color:#ffcc00;padding:15px;font-size:24px;font-weight:bold}.nav{display:flex;justify-content:center;gap:10px;margin:15px}.btn{padding:12px 20px;border:none;border-radius:8px;font-weight:bold;cursor:pointer}.parent{background:#000;color:#ffcc00}.teacher{background:#ffcc00;color:#000}.child{background:#fff;border:2px solid #000}.card{background:#fff;margin:15px;padding:20px;border-radius:12px;box-shadow:0 2px 5px rgba(0,0,0,0.2)}.hidden{display:none}input,select{padding:10px;margin:5px;width:80%;border-radius:6px;border:1px solid #ccc}</style></head><body><div class="header">MZANZI SA 🇿🇦</div><div class="nav"><button class="btn parent" onclick="show('parent')">PARENT</button><button class="btn teacher" onclick="show('teacher')">TEACHER</button><button class="btn child" onclick="show('child')">CHILD</button></div><div id="parent" class="card"><h2>Parent Dashboard</h2><p>Track child's learning</p><input placeholder="Child name"><br><button class="btn parent">Save</button></div><div id="teacher" class="card hidden"><h2>Teacher Dashboard</h2><p>Upload work</p><select><option>Grade 1</option><option>Grade 2</option><option>Grade 3</option></select><br><button class="btn teacher">Upload</button></div><div id="child" class="card hidden"><h2>Child Learn</h2><p>Tap to take photo of your work</p><input type="file" accept="image/*" capture="camera" id="photo"><br><br><div id="preview"></div></div><script>function show(id){document.getElementById('parent').classList.add('hidden');document.getElementById('teacher').classList.add('hidden');document.getElementById('child').classList.add('hidden');document.getElementById(id).classList.remove('hidden');}document.getElementById('photo').addEventListener('change',function(e){const file=e.target.files;if(file){const reader=new FileReader();reader.onload=function(ev){document.getElementById('preview').innerHTML='<img src="'+ev.target.result+'" style="width:100%;border-radius:10px"><p>Photo captured!</p>';};reader.readAsDataURL(file);}});</script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MZANZI SA - Learning</title>
+<style>
+body{font-family:Arial,sans-serif;background:#f4f4f4;margin:0;text-align:center}
+.header{background:#000;color:#ffcc00;padding:15px;font-size:24px;font-weight:bold}
+.nav{display:flex;justify-content:center;gap:10px;margin:15px}
+.btn{padding:12px 20px;border:none;border-radius:8px;font-weight:bold;cursor:pointer}
+.parent{background:#000;color:#ffcc00}
+.teacher{background:#ffcc00;color:#000}
+.child{background:#fff;border:2px solid #000}
+.card{background:#fff;margin:15px;padding:20px;border-radius:12px}
+.hidden{display:none}
+input,select{padding:10px;margin:5px;width:80%;border-radius:6px;border:1px solid #ccc}
+</style>
+</head>
+<body>
+<div class="header">MZANZI SA 🇿🇦</div>
+<div class="nav">
+<button class="btn parent" onclick="show('parent')">PARENT</button>
+<button class="btn teacher" onclick="show('teacher')">TEACHER</button>
+<button class="btn child" onclick="show('child')">CHILD</button>
+</div>
+<div id="parent" class="card">
+<h2>Parent Dashboard</h2>
+<p>Track child's learning</p>
+<input placeholder="Child name"><br><br>
+<button class="btn parent">Save</button>
+</div>
+<div id="teacher" class="card hidden">
+<h2>Teacher Dashboard</h2>
+<p>Upload work</p>
+<select><option>Grade 1</option><option>Grade 2</option><option>Grade 3</option></select><br><br>
+<button class="btn teacher">Upload</button>
+</div>
+<div id="child" class="card hidden">
+<h2>Child Learn</h2>
+<p>Tap to take photo of your work</p>
+<input type="file" accept="image/*" capture="camera" id="photo"><br><br>
+<div id="preview"></div>
+</div>
+<script>
+function show(id){
+http://document.getElementById('parent').classList.add('hidden');
+http://document.getElementById('teacher').classList.add('hidden');
+http://document.getElementById('child').classList.add('hidden');
+http://document.getElementById(id).classList.remove('hidden');
+}
+http://document.getElementById('photo').addEventListener('change',function(e){
+const file=e.target.files;
+if(file){
+const reader=new FileReader();
+http://reader.onload=function(ev){
+http://document.getElementById('preview').innerHTML='<img src="'+ev.target.result+'" style="width:100%;border-radius:10px"><p>Photo captured!</p>';
+};
+http://reader.readAsDataURL(file);
+}
+});
+</script>
+</body>
+</html>
