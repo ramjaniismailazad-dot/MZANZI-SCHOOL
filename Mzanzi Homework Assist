@@ -208,4 +208,3 @@ if(isPaid||Math.floor((Date.now()-trialStart)/(1000*60*60*24))<10){unlockApp();}
 </script>
 </body>
 </html>
-Paste that into GitHub http://index.html, commit, wait 1 min, then open your `ramyanismailazad.github.io` link - full app will work on phone with camera scan.
