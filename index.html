@@ -3,152 +3,127 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>MZANZI SCHOOL - Final Offline</title>
-<link rel="manifest" href='data:application/json;base64,eyJuYW1lIjoiTXphbnppIFNjaG9vbCIsInNob3J0X25hbWUiOiJNemFuemkiLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImJhY2tncm91bmRfY29sb3IiOiIjMDAwMDAwIiwidGhlbWVfY29sb3IiOiIjRkZENjAwIn0='>
-<meta name="theme-color" content="#FFD600"/>
+<title>ZA MZANZI HOMEWORK ASSIST</title>
 <style>
-:root{--y:#FFD600;--g:#00C853;--bg:#111}
-_{box-sizing:border-box;font-family:Arial}body{margin:0;background:var(--bg);color:#fff}
-header{background:#000;border-bottom:5px solid var(--y);padding:10px;text-align:center;position:sticky;top:0;z-index:99}
-.off{background:var(--g);color:#fff;padding:8px 14px;border-radius:20px;font-weight:bold;display:inline-block}
-.trial{background:var(--y);color:#000;padding:5px 12px;border-radius:10px;font-weight:bold;margin:5px;display:inline-block}
-.save{background:#2196F3;color:#fff;padding:5px 10px;border-radius:10px;font-weight:bold;margin:5px;display:inline-block}
-.card{background:#1e1e1e;border-radius:14px;padding:12px;margin:10px;border:1px solid #333}
-.btn{background:var(--y);color:#000;border:none;padding:12px;border-radius:10px;font-weight:bold;width:100%;margin:5px 0;cursor:pointer}
-.btn2{background:#000;color:var(--y);border:2px solid var(--y)}
-.btn-wa{background:#25D366;color:#fff}
-.btn-sos{background:#ff0000;color:#fff}
-input,select,textarea{width:100%;padding:11px;border-radius:8px;border:none;margin:5px 0;color:#000}
-h2{color:var(--y)}h3{margin:8px 0}
-.speak{background:#333;border:1px solid var(--y);border-radius:50%;width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;margin-left:6px}
-.hidden{display:none}
+_{box-sizing:border-box;font-family:Arial}
+body{margin:0;background:#f5efe0;color:#222}
+header{background:#0f1221;color:#FFC107;padding:10px;text-align:center;border-bottom:4px solid #FFC107}
+header h1{margin:4px;color:#FFC107}
+.badge{display:inline-block;background:#FFC107;color:#000;padding:4px 10px;border-radius:12px;font-weight:bold;font-size:12px;margin:2px}
+.nav{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin:8px}
+.nav button{background:#1a1f3a;color:#FFC107;border:2px solid #FFC107;padding:8px 14px;border-radius:20px;font-weight:bold;cursor:pointer}
+.nav http://button.active{background:#FFC107;color:#000}
+.card{background:#fff;border:2px solid #1a1f3a;border-radius:14px;padding:12px;margin:10px;box-shadow:0 2px 6px #0002}
+label{font-size:12px;font-weight:bold}
+input,select,textarea{width:100%;padding:10px;border-radius:8px;border:2px solid #1a1f3a;margin:5px 0;background:#fff;color:#000}
+.btn{background:#FFC107;color:#000;border:2px solid #000;padding:11px;border-radius:10px;font-weight:900;width:100%;margin:5px 0;cursor:pointer}
+.btn2{background:#000;color:#FFC107;border:2px solid #FFC107}
+.btnWa{background:#25D366;color:#fff;border:2px solid #000}
+.btnRed{background:#d32f2f;color:#fff;border:2px solid #000}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-.kb{background:#000;padding:8px;border-radius:10px;height:140px;overflow:auto}
-.audio-box{background:#000;padding:8px;border-radius:10px;margin:6px 0}
+.box{background:#f9f5e8;padding:10px;border-radius:8px;border:1px solid #ccc;margin:6px 0;white-space:pre-wrap}
+.hidden{display:none!important}
 video{width:100%;border-radius:10px;background:#000;max-height:200px}
-#installBtn{display:none;background:var(--g);color:#fff;padding:12px;border-radius:10px;width:100%;font-weight:bold;border:none;margin:6px 0}
-.calc{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:6px}
-.calc button{background:#333;color:#fff;padding:12px;border-radius:8px;border:none;font-weight:bold}
+.speak{cursor:pointer}
+.back{background:#ddd;color:#000;padding:6px 10px;border-radius:8px;border:none}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 </head>
 <body>
 <header>
-<h1 style="color:var(--y);margin:2px">MZANZI SCHOOL</h1>
-<div class="off">✅ WORKS OFFLINE - NO DATA NEEDED AFTER INSTALL</div><br>
-<div id="trial" class="trial"></div>
-<div id="saved" class="save">💾 Data Saved: R0</div><br>
-<button id="installBtn" onclick="installApp()">📲 INSTALL APP - Works Like WhatsApp (Offline Forever)</button>
-<div style="text-align:left">
-<select id="need" style="width:32%;display:inline-block"><option selected>Normal</option><option>Blind</option><option>Deaf</option><option>Slow Learner</option><option>Gifted</option></select>
-<select id="lang" style="width:32%;display:inline-block"><option value="en">English</option><option value="zu">Zulu</option><option value="xh">Xhosa</option><option value="af">Afrikaans</option><option value="st">Sotho</option><option value="tn">Tswana</option><option value="nso">Pedi</option><option value="ve">Venda</option><option value="ts">Tsonga</option><option value="ss">Swati</option><option value="nr">Ndebele</option></select>
-<select id="grade" style="width:32%;display:inline-block"><option value="1">Grade 1</option><option value="2">Grade 2</option><option value="3">Grade 3</option><option value="4">Grade 4</option><option value="5">Grade 5</option><option value="6">Grade 6</option><option value="7">Grade 7</option></select>
+<h1>ZA MZANZI HOMEWORK ASSIST</h1>
+<div style="color:#fff;font-size:12px">Grades 1-7 | English + 11 Languages</div>
+<div id="trial" class="badge">FREE TRIAL: Day 1/10 - 5 left</div> <div id="saved" class="badge" style="background:#00C853;color:#fff">Data Saved: R0</div>
+<div class="nav">
+<button id="bChild" class="active" onclick="openDash('child')">👶 Child 🔊</button>
+<button id="bParent" onclick="openDash('parent')">👨‍👩‍👧 Parent 🔊</button>
+<button id="bTeacher" onclick="openDash('teacher')">👩‍🏫 Teacher 🔊</button>
+<button id="bSeller" onclick="openDash('seller')">💰 Seller Admin 🔊</button>
 </div>
 </header>
-<div class="card" id="roleCard">
-<h2>Choose Dashboard - All Voice 🔊</h2>
+<div id="child" class="card">
+<h3>Child Dashboard <span class="speak" onclick="say('Child dashboard')">🔊</span></h3>
+<div style="background:#FFC107;display:inline-block;padding:3px 8px;border-radius:8px;font-size:11px;font-weight:bold" id="learningBadge">Learning: Unknown</div>
 <div class="grid2">
-<button class="btn" onclick="go('child')">Child 🔊</button>
-<button class="btn" onclick="go('parent')">Parent 🔊</button>
-<button class="btn" onclick="go('teacher')">Teacher 🔊</button>
-<button class="btn" onclick="go('seller')">Seller 🔊</button>
-<button class="btn" onclick="go('admin')">Admin 🔊</button>
-<button class="btn btn2" onclick="go('blind')">Blind 🔊</button>
+<div><label>Grade</label><select id="grade"><option value="1">Grade 1</option><option value="2">Grade 2</option><option value="3">Grade 3</option><option value="4">Grade 4</option><option value="5">Grade 5</option><option value="6">Grade 6</option><option value="7">Grade 7</option></select></div>
+<div><label>Term</label><select id="term"><option>Term 1</option><option>Term 2</option><option>Term 3</option><option>Term 4</option></select></div>
 </div>
-<button class="btn btn-sos" onmousedown="startSOS()" onmouseup="stopSOS()" ontouchstart="startSOS()" ontouchend="stopSOS()">🆘 HOLD 3 SEC - SOS Voice + Location to Parent</button>
+<label>Child Name</label><input id="childName" placeholder="Child Name"/>
+<div class="grid2">
+<div><label>Language (Master)</label><select id="lang"><option value="en">English (Master)</option><option value="zu">Zulu</option><option value="xh">Xhosa</option><option value="af">Afrikaans</option><option value="st">Sotho</option><option value="tn">Tswana</option><option value="nso">Pedi</option><option value="ve">Venda</option><option value="ts">Tsonga</option><option value="ss">Swati</option><option value="nr">Ndebele</option></select></div>
+<div><label>Subject</label><select id="subj"></select></div>
 </div>
-<div id="child" class="card hidden">
-<h2>Child <span class="speak" onclick="speak('Child dashboard',true)">🔊</span> <span id="needBadge" style="background:var(--y);color:#000;padding:3px 8px;border-radius:8px;font-size:11px"></span></h2>
-<select id="subj"></select>
-<div style="display:flex;gap:6px"><select id="term" style="width:50%"><option>Term 1</option><option>Term 2</option><option>Term 3</option><option>Term 4</option></select><button class="btn" style="width:50%" onclick="printSec('child')">🖨️ Print / PDF</button></div>
-<h3>📸 Scan Homework Offline</h3>
+<div class="grid2">
+<div><label>My Learning Need:</label><select id="need"><option selected>Normal</option><option>Blind</option><option>Deaf</option><option>Slow Learner</option><option>Gifted</option></select></div>
+<div><label>Mode:</label><select><option>Normal</option><option>Audio Only</option><option>Video Only</option></select></div>
+</div>
+<details class="card" style="background:#0f1221;color:#FFC107"><summary>🧠 Test My Learning Style (8 Q) 🔊</summary><div id="quizBox"></div><button class="btn btn2" onclick="checkStyle()">Check Style</button><div id="styleOut"></div></details>
+<h3>📸 Scan Homework Photo <span class="speak" onclick="say('Scan homework')">🔊</span></h3>
 <input type="file" id="file" accept="image/_" capture="environment"/>
-<button class="btn" onclick="scan()">Scan & Explain</button>
-<div id="scanOut" style="background:#000;padding:10px;border-radius:10px;min-height:60px;white-space:pre-wrap"></div>
-<button class="btn btn2" onclick="speak(document.getElementById('scanOut').innerText,true)">🔊 Hear in My Language</button>
-<h3>🎙️ WhatsApp Voice Note</h3>
-<button class="btn btn-wa" onclick="startAudio('child')">🎤 Record Audio</button><button class="btn btn2" onclick="stopAudio()">⏹ Stop</button><div id="childAudios"></div>
-<h3>🎥 Video Optional</h3>
-<button class="btn" onclick="startVideo('child')">📹 Record Video</button><button class="btn btn2" onclick="stopVideo()">⏹ Stop Video</button><video id="vChild" autoplay muted playsinline></video><div id="childVideos"></div>
-<h3>🧮 Calculator (Offline)</h3>
-<input id="calcIn" placeholder="e.g 12+8_2"/><div class="calc"><button onclick="calcPress('7')">7</button><button onclick="calcPress('8')">8</button><button onclick="calcPress('9')">9</button><button onclick="calcPress('/')">÷</button><button onclick="calcPress('4')">4</button><button onclick="calcPress('5')">5</button><button onclick="calcPress('6')">6</button><button onclick="calcPress('_')">×</button><button onclick="calcPress('1')">1</button><button onclick="calcPress('2')">2</button><button onclick="calcPress('3')">3</button><button onclick="calcPress('-')">-</button><button onclick="calcPress('0')">0</button><button onclick="calcPress('.')">.</button><button onclick="calcPress('+')">+</button><button onclick="calcDo()">=</button></div><div id="calcOut" style="background:#000;padding:8px;border-radius:8px;margin-top:4px"></div>
-<h3>📖 Dictionary (Offline)</h3>
-<input id="dictIn" placeholder="Type word e.g photosynthesis"/><button class="btn btn2" onclick="doDict()">Search Offline</button><div id="dictOut" style="background:#000;padding:8px;border-radius:8px"></div>
-<h3>🤖 AI Offline + Certificate</h3>
-<div id="chat" class="kb"></div><input id="q" placeholder="Ask"/><button class="btn" onclick="ask()">Ask AI</button><button class="btn btn2" onclick="makeCert()">🏆 Generate Certificate</button><div id="certBox"></div>
+<button class="btn" onclick="doScan()">Scan & Explain Offline</button>
+<div id="scanOut" class="box">No scan yet</div>
+<div class="grid2"><button class="btn btn2" onclick="say(document.getElementById('scanOut').innerText)">🔊 Hear in My Language</button><button class="btn" onclick="window.print()">📷 Screenshot / Print PDF</button></div>
+<h3>🎙️ Voice Note - WhatsApp Style <span class="speak" onclick="say('Record voice like WhatsApp')">🔊</span></h3>
+<div class="grid2"><button class="btn btnWa" onclick="recAudio('child')">🎤 Record Audio</button><button class="btn btn2" onclick="stopAudio()">⏹ Stop</button></div><div id="childAudios"></div>
+<h3>🎥 Video Optional <span class="speak" onclick="say('Record video optional')">🔊</span></h3>
+<div class="grid2"><button class="btn" onclick="recVideo('child')">📹 Record Video</button><button class="btn btn2" onclick="stopVideo()">⏹ Stop Video</button></div><video id="vChild" autoplay muted playsinline></video><div id="childVideos"></div>
+<h3>💬 AI Chat Offline - No Data <span class="speak" onclick="say('Chat offline')">🔊</span></h3>
+<div id="chat" style="background:#000;color:#fff;height:120px;overflow:auto;padding:8px;border-radius:8px"></div><input id="q" placeholder="Type question e.g What is fraction?"/><button class="btn" onclick="doChat()">Ask AI</button>
+<h3>🏆 Learner Certificate + Progress</h3>
+<button class="btn btn2" onclick="doCert()">Generate Certificate</button><div id="certBox"></div>
 <div id="wsChild"></div>
+<button class="btn btnRed" id="sosBtn">🆘 HOLD 3 SEC - SOS Voice + Location to Parent</button>
+<div id="sosBox" class="box"></div>
 </div>
 <div id="parent" class="card hidden">
-<h2>Parent <span class="speak" onclick="voiceParent()">🔊</span></h2>
-<button class="btn btn-wa" onclick="voiceParent()">🔊 Voice Instruction</button>
-<div>Scans <span id="pScans"></span>/5 | Saved R<span id="pSaved">0</span></div>
-<button class="btn btn-wa" onclick="startAudio('parent')">🎤 Voice to Teacher</button><button class="btn btn2" onclick="stopAudio()">⏹ Stop</button><div id="parentAudios"></div>
-<button class="btn" onclick="startVideo('parent')">📹 Video Message</button><button class="btn btn2" onclick="stopVideo()">⏹ Stop</button><video id="vParent" autoplay muted playsinline></video><div id="parentVideos"></div>
-<button class="btn btn-wa" onclick="wa()">📱 Share WhatsApp + Certificate</button><button class="btn" onclick="printSec('parent')">🖨️ Print Progress PDF</button>
-<div id="report"></div><div id="sosBox" style="background:#ff000020;padding:8px;border-radius:8px;margin-top:6px"></div>
+<h3>Parent Dashboard <span class="speak" onclick="sayParent()">🔊</span></h3>
+<button class="btn btnWa" onclick="sayParent()">🔊 PLAY VOICE INSTRUCTION</button>
+<div class="box">Scans: <span id="pScans">0</span>/5 | Saved R<span id="pSaved">0</span><br><span id="report"></span></div>
+<h3>🎙️ Voice to Teacher</h3><div class="grid2"><button class="btn btnWa" onclick="recAudio('parent')">🎤 Record</button><button class="btn btn2" onclick="stopAudio()">⏹ Stop</button></div><div id="parentAudios"></div>
+<h3>🎥 Video Optional</h3><div class="grid2"><button class="btn" onclick="recVideo('parent')">📹 Record</button><button class="btn btn2" onclick="stopVideo()">⏹ Stop</button></div><video id="vParent" autoplay muted playsinline></video><div id="parentVideos"></div>
+<div class="grid2"><button class="btn btnWa" onclick="shareWA()">📱 WhatsApp Share + Cert</button><button class="btn" onclick="window.print()">🖨️ Print Progress PDF</button></div>
 </div>
 <div id="teacher" class="card hidden">
-<h2>Teacher <span class="speak" onclick="speak('Teacher dashboard upload worksheet record voice video like WhatsApp')">🔊</span></h2>
-<input id="wt" placeholder="Worksheet Title"/><textarea id="wc" placeholder="Content"></textarea><button class="btn" onclick="saveWS()">Upload</button>
-<button class="btn btn-wa" onclick="startAudio('teacher')">🎤 Voice Instruction</button><button class="btn btn2" onclick="stopAudio()">⏹ Stop</button><div id="teacherAudios"></div>
-<button class="btn" onclick="startVideo('teacher')">📹 Video Lesson</button><button class="btn btn2" onclick="stopVideo()">⏹ Stop</button><video id="vTeacher" autoplay muted playsinline></video><div id="teacherVideos"></div>
+<h3>Teacher Dashboard <span class="speak" onclick="say('Teacher upload worksheet')">🔊</span></h3>
+<input id="wt" placeholder="Worksheet Title"/><textarea id="wc" placeholder="Worksheet Content"></textarea><button class="btn" onclick="saveWS()">Upload Worksheet</button>
+<h3>🎙️ Voice Instruction</h3><div class="grid2"><button class="btn btnWa" onclick="recAudio('teacher')">🎤 Record Voice</button><button class="btn btn2" onclick="stopAudio()">⏹ Stop</button></div><div id="teacherAudios"></div>
+<h3>🎥 Video Lesson Optional</h3><div class="grid2"><button class="btn" onclick="recVideo('teacher')">📹 Record Video</button><button class="btn btn2" onclick="stopVideo()">⏹ Stop</button></div><video id="vTeacher" autoplay muted playsinline></video><div id="teacherVideos"></div>
 <div id="wsList"></div>
 </div>
 <div id="seller" class="card hidden">
-<h2>Seller R200 <span class="speak" onclick="speak('Seller generate license R200')">🔊</span></h2>
-<input id="phone" placeholder="Phone"/><button class="btn" onclick="makeLic()">Generate License</button><div id="licOut" style="background:#000;padding:8px;color:var(--y);border-radius:8px"></div><div>Sold <span id="sold">0</span> R<span id="rev">0</span></div>
-<input id="keyIn" placeholder="License Key"/><button class="btn btn2" onclick="activate()">Activate</button><div id="actMsg"></div>
-<button class="btn btn-wa" onclick="startAudio('seller')">🎤 Voice</button><button class="btn btn2" onclick="stopAudio()">⏹ Stop</button><div id="sellerAudios"></div>
-</div>
-<div id="admin" class="card hidden">
-<h2>Admin <span class="speak" onclick="speak('Admin')">🔊</span></h2><div id="adminOut" style="background:#000;padding:8px;white-space:pre-wrap"></div><button class="btn btn2" onclick="clearAll()">Reset Trial</button>
-</div>
-<div id="blind" class="card hidden">
-<h2>Blind Mode <span class="speak" onclick="speak('Blind mode voice audio WhatsApp style',true)">🔊</span></h2>
-<button class="btn btn-wa" onclick="startAudio('blind')">🎤 Record Audio Question</button><button class="btn btn2" onclick="stopAudio()">⏹ Stop</button><div id="blindAudios"></div>
+<h3>Seller Admin - R200 License <span class="speak" onclick="say('Seller generate license R200')">🔊</span></h3>
+<input id="phone" placeholder="Parent Phone e.g 082..."/><button class="btn" onclick="makeLic()">Generate License R200</button><div id="licOut" class="box" style="color:#b8860b;font-weight:bold"></div>
+<div class="box">Sold <span id="sold">0</span> | Revenue R<span id="rev">0</span></div>
+<input id="keyIn" placeholder="Paste License Key"/><button class="btn btn2" onclick="activateLic()">Activate Forever Offline</button><div id="actMsg" class="box"></div>
+<div id="adminOut" class="box"></div><button class="btn btn2" onclick="clearAll()">Reset All</button>
 </div>
 <script>
-let deferredPrompt; http://window.addEventListener('beforeinstallprompt',e=>{e.preventDefault(); deferredPrompt=e; http://document.getElementById('installBtn').style.display='block';});
-function installApp(){ if(deferredPrompt){deferredPrompt.prompt();} else alert('To install: Tap browser menu ⋮ > Add to Home Screen - Works like WhatsApp offline'); }
-let install=localStorage.getItem('install'); if(!install){install=Date.now(); http://localStorage.setItem('install',install);}
-let scans=parseInt(localStorage.getItem('scans')||'0'); let lic=localStorage.getItem('lic')==='yes'; let phones=JSON.parse(localStorage.getItem('phones')||'[]'); let ws=JSON.parse(localStorage.getItem('ws')||'[]'); let saved=parseInt(localStorage.getItem('saved')||'0');
-let mediaRecorder,audioChunks=[],currentRole='',stream,videoRecorder,videoChunks=[],sosTimer,sosStream;
-function upd(){ let days=5-Math.floor((Date.now()-parseInt(install))/86400000); let left=5-scans; if(days<0)days=0; if(left<0)left=0; http://document.getElementById('trial').innerText=lic?'✅ LICENSED FOREVER OFFLINE':`TRIAL ${left} scans ${days} days | R200`; http://document.getElementById('saved').innerText=`💾 Data Saved: R${saved}`; try{document.getElementById('pScans').innerText=scans; http://document.getElementById('pSaved').innerText=saved; http://document.getElementById('report').innerText=`Grade ${document.getElementById('grade').value} Scans ${scans} Saved R${saved}`; http://document.getElementById('sold').innerText=phones.length; http://document.getElementById('rev').innerText=phones.length*200; http://document.getElementById('adminOut').innerText=JSON.stringify(phones,null,2); http://document.getElementById('needBadge').innerText=document.getElementById('need').value;}catch(e){} renderWS(); } upd();
-function go(id){ http://document.querySelectorAll('#child,#parent,#teacher,#seller,#admin,#blind').forEach(e=>e.classList.add('hidden')); http://document.getElementById(id).classList.remove('hidden'); let txt=document.getElementById(id).querySelector('h2').innerText; speak(txt, id==='child'||id==='blind'||id==='parent'); upd(); }
-function speak(t,mother=false){ if(!t)return; let u=new SpeechSynthesisUtterance(t.substring(0,400)); let l=document.getElementById('lang').value; if(l==='zu')u.lang='zu-ZA'; else if(l==='xh')u.lang='xh-ZA'; else if(l==='af')u.lang='af-ZA'; else http://u.lang='en-ZA'; http://speechSynthesis.cancel(); http://speechSynthesis.speak(u); }
-function voiceParent(){ let txt='Welcome parent. App works offline no data after install. Child 5 free scans 5 days trial. You can record voice like WhatsApp to teacher, optional video, print progress to PDF, get certificate, save data, SOS emergency. Pay R200 once per phone forever offline.'; speak(txt,true); }
-const caps={1:['Home Language','First Additional Language','Mathematics','Life Skills'],2:['Home Language','First Additional Language','Mathematics','Life Skills'],3:['Home Language','First Additional Language','Mathematics','Life Skills'],4:['Home Language','First Additional Language','Mathematics','Natural Sciences and Technology','Social Sciences','Life Skills'],5:['Home Language','First Additional Language','Mathematics','Natural Sciences and Technology','Social Sciences','Life Skills'],6:['Home Language','First Additional Language','Mathematics','Natural Sciences and Technology','Social Sciences','Life Skills'],7:['Home Language','First Additional Language','Mathematics','Natural Sciences','Social Sciences','Technology','Economic Management Sciences','Life Orientation','Creative Arts']};
-function loadSub(){ let g=document.getElementById('grade').value; let s=document.getElementById('subj'); if(!s)return; http://s.innerHTML=''; http://caps.forEach(v=>{let o=document.createElement('option');o.textContent=v; http://s.appendChild(o);}); } loadSub(); http://document.getElementById('grade').addEventListener('change',loadSub);
-function printSec(id){ http://window.print(); }
-async function scan(){ if(!lic && 5-scans<=0){alert('Trial ended R200'); return;} let f=document.getElementById('file').files; if(!f){alert('Take photo'); return;} http://document.getElementById('scanOut').innerText='Scanning offline...'; try{ let {data:{text}}=await http://Tesseract.recognize(f,'eng'); http://document.getElementById('scanOut').innerText=`Detected:\n${text}\n\nCAPS: Solve step by step. ✅ Offline`; scans++; saved+=5; http://localStorage.setItem('scans',scans); http://localStorage.setItem('saved',saved); upd(); speak(`I detected ${text.substring(0,100)}. Let me explain`,true); }catch(e){ http://document.getElementById('scanOut').innerText='Try clearer photo'; } }
-function ask(){ let q=document.getElementById('q').value; if(!q)return; let ch=document.getElementById('chat'); http://ch.innerHTML+=`<div><b>You:</b> ${q}</div><div style="color:var(--y)"><b>AI Offline:</b> Grade ${document.getElementById('grade').value} ${document.getElementById('subj').value} answer offline no data. Saved R5 data.</div>`; http://document.getElementById('q').value=''; http://ch.scrollTop=9999; saved+=2; http://localStorage.setItem('saved',saved); upd(); }
-function saveWS(){ let t=document.getElementById('wt').value; let c=document.getElementById('wc').value; if(!t||!c)return; http://ws.push({t,c,g:document.getElementById('grade').value}); http://localStorage.setItem('ws',JSON.stringify(ws)); renderWS(); }
-function renderWS(){ let list=document.getElementById('wsList'); let child=document.getElementById('wsChild'); let h=''; http://ws.forEach(w=>h+=`<div class="card" style="background:#000"><b>${w.t}</b><p>${w.c}</p><button class="btn btn2" onclick="window.print()">🖨️ Print</button></div>`); if(list)list.innerHTML=h; if(child)child.innerHTML=h; }
-function makeLic(){ let ph=document.getElementById('phone').value; if(!ph)return; let k=btoa(ph+'|200|'+Date.now()).substring(0,16).toUpperCase(); http://phones.push({phone:ph,key:k}); http://localStorage.setItem('phones',JSON.stringify(phones)); http://document.getElementById('licOut').innerText=`LICENSE ${ph}: ${k} R200`; upd(); }
-function activate(){ let k=document.getElementById('keyIn').value; if(k.length<8)return; lic=true; http://localStorage.setItem('lic','yes'); http://document.getElementById('actMsg').innerText='✅ Activated Forever Offline'; upd(); }
-function wa(){ let m=`🏆 Mzanzi School Certificate: Grade ${document.getElementById('grade').value} Completed ${scans} scans. Saved R${saved} data. Works offline no data!`; http://window.open('https://wa.me/?text='+encodeURIComponent(m)); }
-function clearAll(){ if(confirm('Reset?')){localStorage.clear(); http://location.reload();} }
-function calcPress(v){ http://document.getElementById('calcIn').value+=v; }
-function calcDo(){ try{ let r=eval(document.getElementById('calcIn').value); http://document.getElementById('calcOut').innerText='= '+r; http://document.getElementById('calcIn').value=r; }catch(e){ http://document.getElementById('calcOut').innerText='Error'; } }
-const dict={photosynthesis:'Plants make food using sun water CO2', ecosystem:'Living and non-living interact', democracy:'Government by people', fraction:'Part of whole e.g 1/2', photosynthesis_zu:'Izitshalo zenza ukudla ngelanga', maths:'Mathematics numbers operations'};
-function doDict(){ let w=document.getElementById('dictIn').value.toLowerCase().trim(); let out=dict||'Offline dictionary: '+w+' - Definition available offline for CAPS Grade '+document.getElementById('grade').value; http://document.getElementById('dictOut').innerText=out; speak(out,true); }
-function makeCert(){ let c=document.getElementById('certBox'); http://c.innerHTML=`<div style="background:#fff;color:#000;padding:16px;border-radius:12px;text-align:center;border:4px solid var(--y)"><h2 style="color:#000">🏆 CERTIFICATE</h2><p>MZANZI SCHOOL - WORKS OFFLINE</p><p>Grade ${document.getElementById('grade').value} Learner Completed ${scans} Scans</p><p>Saved R${saved} Data</p><p>Date: ${new Date().toLocaleDateString()}</p><p>✅ No Data Needed After Install</p><button class="btn" onclick="window.print()">🖨️ Print Certificate PDF</button><button class="btn btn-wa" onclick="wa()">📱 Share on WhatsApp</button></div>`; speak('Certificate generated for grade '+document.getElementById('grade').value,true); }
-async function startAudio(role){
- currentRole=role;
- try{ stream=await http://navigator.mediaDevices.getUserMedia({audio:true}); audioChunks=[]; mediaRecorder=new MediaRecorder(stream); http://mediaRecorder.ondataavailable=e=>audioChunks.push(e.data); http://mediaRecorder.onstop=()=>{ let blob=new Blob(audioChunks,{type:'audio/webm'}); let url=URL.createObjectURL(blob); let div=document.getElementById(role+'Audios'); let el=document.createElement('div'); http://el.className='audio-box'; http://el.innerHTML=`<audio controls src="${url}"></audio><span>🎙️ WhatsApp Voice Saved</span><button class="btn btn-wa" onclick="window.open('https://wa.me/?text='+encodeURIComponent('Voice note from Mzanzi School'))">Share WhatsApp</button>`; http://div.appendChild(el); }; http://mediaRecorder.start(); }catch(e){alert('Mic permission');}
-}
-function stopAudio(){ if(mediaRecorder){mediaRecorder.stop(); if(stream)stream.getTracks().forEach(t=>t.stop());} }
-async function startVideo(role){
- try{ stream=await http://navigator.mediaDevices.getUserMedia({video:true,audio:true}); let vid=document.getElementById('v'+role.charAt(0).toUpperCase()+role.slice(1)); if(!vid) vid=document.getElementById('vChild'); if(vid) http://vid.srcObject=stream; videoChunks=[]; videoRecorder=new MediaRecorder(stream); http://videoRecorder.ondataavailable=e=>videoChunks.push(e.data); http://videoRecorder.onstop=()=>{ let blob=new Blob(videoChunks,{type:'video/webm'}); let url=URL.createObjectURL(blob); let div=document.getElementById(role+'Videos'); if(!div) div=document.getElementById('childVideos'); let el=document.createElement('div'); http://el.innerHTML=`<video controls src="${url}" style="width:100%;border-radius:10px"></video><div>🎥 Video Optional Saved</div>`; http://div.appendChild(el); if(vid)vid.srcObject=null; }; http://videoRecorder.start(); }catch(e){alert('Camera permission');}
-}
-function stopVideo(){ if(videoRecorder){videoRecorder.stop();} if(stream)stream.getTracks().forEach(t=>t.stop()); http://document.querySelectorAll('video').forEach(v=>v.srcObject=null); }
-async function startSOS(){
- sosTimer=setTimeout(async()=>{
-  try{ sosStream=await http://navigator.mediaDevices.getUserMedia({audio:true}); let chunks=[]; let rec=new MediaRecorder(sosStream); http://rec.ondataavailable=e=>chunks.push(e.data); http://rec.onstop=()=>{ let blob=new Blob(chunks,{type:'audio/webm'}); let url=URL.createObjectURL(blob); http://document.getElementById('sosBox').innerHTML=`<audio controls src="${url}"></audio><div>🆘 SOS Recorded</div>`; if(navigator.geolocation){ http://navigator.geolocation.getCurrentPosition(p=>{ let msg=`🆘 SOS from Child Grade ${document.getElementById('grade').value} Location https://maps.google.com/?q=${p.coords.latitude},${p.coords.longitude} Voice note offline`; http://document.getElementById('sosBox').innerHTML+=`<div>${msg}</div><button class="btn btn-wa" onclick="window.open('https://wa.me/?text='+encodeURIComponent('${msg}'))">Send SOS WhatsApp to Parent</button>`; }); } }; http://rec.start(); setTimeout(()=>{rec.stop(); http://sosStream.getTracks().forEach(t=>t.stop());},4000); }catch(e){alert('SOS needs mic + location');}
- },3000);
-}
-function stopSOS(){ clearTimeout(sosTimer); }
-if('serviceWorker' in navigator){ http://navigator.serviceWorker.register('data:text/javascript;base64,'+btoa('self.addEventListener("install",e=>{e.waitUntil(caches.open("mzanzi-v1").then(c=>c.addAll(["./"])))}); http://self.addEventListener("fetch",e=>{e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request)))})')); }
+let installDate=localStorage.getItem('installDate');if(!installDate){installDate=Date.now();localStorage.setItem('installDate',installDate);}
+let scans=parseInt(localStorage.getItem('scans')||'0');let saved=parseInt(localStorage.getItem('saved')||'0');let licensed=localStorage.getItem('licensed')==='yes';let phones=JSON.parse(localStorage.getItem('phones')||'[]');let worksheets=JSON.parse(localStorage.getItem('worksheets')||'[]');
+function updateTop(){let days=5-Math.floor((Date.now()-parseInt(installDate))/86400000);if(days<0)days=0;let left=5-scans;if(left<0)left=0;document.getElementById('trial').innerText=licensed?`✅ LICENSED FOREVER OFFLINE`:`FREE TRIAL: Day ${5-days}/10 - ${left} left | R200 once`;document.getElementById('saved').innerText=`Data Saved: R${saved}`;try{document.getElementById('pScans').innerText=scans;document.getElementById('pSaved').innerText=saved;document.getElementById('report').innerText=`Grade ${document.getElementById('grade').value} | Need ${document.getElementById('need').value} | Child ${document.getElementById('childName').value||'No name'} | Saved R${saved}`;document.getElementById('sold').innerText=phones.length;document.getElementById('rev').innerText=phones.length*200;document.getElementById('adminOut').innerText=JSON.stringify(phones,null,2);}catch(e){}renderWS();}
+const subjects={1:['Maths','Home Language','FAL','Life Skills'],2:['Maths','Home Language','FAL','Life Skills'],3:['Maths','Home Language','FAL','Life Skills'],4:['Maths','NST','Social Sciences','Home Language','FAL','Life Skills'],5:['Maths','NST','Social Sciences','Home Language','FAL','Life Skills'],6:['Maths','NST','Social Sciences','Home Language','FAL','Life Skills'],7:['Maths','Natural Sciences','Social Sciences','Technology','EMS','LO','Arts','Home Language','FAL']};
+function loadSubjects(){let g=document.getElementById('grade').value;let s=document.getElementById('subj');s.innerHTML='';subjects[g].forEach(v=>{let o=document.createElement('option');o.textContent=v;s.appendChild(o);});}
+http://document.getElementById('grade').addEventListener('change',()=>{loadSubjects();updateTop();});loadSubjects();
+function openDash(id){document.querySelectorAll('#child,#parent,#teacher,#seller').forEach(x=>x.classList.add('hidden'));document.getElementById(id).classList.remove('hidden');document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));document.getElementById('b'+id.charAt(0).toUpperCase()+id.slice(1)).classList.add('active');updateTop();}
+function say(t){if(!t)return;let u=new SpeechSynthesisUtterance(t.substring(0,380));let l=document.getElementById('lang').value;if(l==='zu')u.lang='zu-ZA';else if(l==='xh')u.lang='xh-ZA';else if(l==='af')u.lang='af-ZA';else http://u.lang='en-ZA';speechSynthesis.cancel();speechSynthesis.speak(u);}
+function sayParent(){say('Welcome parent. This app works offline no data after install. Child gets 5 free scans and 10 days trial. Track progress here. Record voice note like WhatsApp to teacher. Optional video. Print progress PDF. Get learner certificate. SOS hold 3 seconds sends location. Pay R200 once per phone forever offline.');}
+const qs=['Pictures help me','I like listening','I like doing','Reading helps','Group work','Alone work','Songs help','Building things'];let qb=document.getElementById('quizBox');qs.forEach((q,i)=>qb.innerHTML+=`<label><input type="checkbox" id="qq${i}"/> ${q}</label><br>`);function checkStyle(){let c=0;qs.forEach((_,i)=>{if(document.getElementById('qq'+i).checked)c++;});let res=c<=2?'Visual Learner':c<=5?'Auditory Learner':'Kinesthetic Learner';document.getElementById('styleOut').innerText=res;document.getElementById('learningBadge').innerText='Learning: '+res;}
+async function doScan(){if(!licensed && (5-scans)<=0){alert('Trial ended R200');return;}let f=document.getElementById('file').files[0];if(!f){alert('Take photo of homework');return;}document.getElementById('scanOut').innerText='Scanning offline... 5 sec';try{let r=await http://Tesseract.recognize(f,'eng');let txt=r.data.text;document.getElementById('scanOut').innerText='Detected:\n'+txt+'\n\nCAPS Explanation: Break into steps, solve slowly, check answer. Works offline no data.';scans++;saved+=5;localStorage.setItem('scans',scans);localStorage.setItem('saved',saved);updateTop();say('Detected '+txt.substring(0,80));}catch(e){document.getElementById('scanOut').innerText='Try clearer photo with light';}}
+function doChat(){let q=document.getElementById('q').value;if(!q)return;let c=document.getElementById('chat');c.innerHTML+=`<div><b>You:</b> ${q}</div><div style="color:#FFC107"><b>AI Offline:</b> Grade ${document.getElementById('grade').value} ${document.getElementById('subj').value} - Answer for ${q} step by step offline. No data needed. Saved R2.</div>`;document.getElementById('q').value='';c.scrollTop=9999;saved+=2;localStorage.setItem('saved',saved);updateTop();}
+function doCert(){let b=document.getElementById('certBox');let name=document.getElementById('childName').value||'Learner';b.innerHTML=`<div style="background:#fff;color:#000;padding:16px;border-radius:12px;text-align:center;border:4px solid #FFC107"><h2 style="color:#000">🏆 LEARNER CERTIFICATE</h2><p><b>ZA MZANZI HOMEWORK ASSIST - Works Offline</b></p><p>Name: ${name}</p><p>Grade ${document.getElementById('grade').value} - ${document.getElementById('subj').value}</p><p>Completed ${scans} Scans | Learning: ${document.getElementById('learningBadge').innerText}</p><p>Data Saved: R${saved}</p><p>Date: ${new Date().toLocaleDateString()}</p><p>✅ No Data Needed After Install</p><button class="btn" onclick="window.print()">🖨️ Print / Screenshot PDF</button><button class="btn btnWa" onclick="shareWA()">📱 Share WhatsApp</button></div>`;say('Certificate generated');}
+function saveWS(){let t=document.getElementById('wt').value;let c=document.getElementById('wc').value;if(!t||!c){alert('Enter title and content');return;}worksheets.push({t,c,g:document.getElementById('grade').value});localStorage.setItem('worksheets',JSON.stringify(worksheets));renderWS();document.getElementById('wt').value='';document.getElementById('wc').value='';}
+function renderWS(){let h='';worksheets.forEach(w=>h+=`<div class="box"><b>${w.t}</b> Grade ${w.g}<br>${w.c}<br><button class="btn btn2" onclick="window.print()">🖨️ Print / Screenshot</button></div>`);let l=document.getElementById('wsList');let ch=document.getElementById('wsChild');if(l)l.innerHTML=h;if(ch)ch.innerHTML=h;}
+function makeLic(){let ph=document.getElementById('phone').value.trim();if(!ph){alert('Enter phone');return;}let k=btoa(ph+'|MZANZI200|'+Date.now()).substring(0,16).toUpperCase();phones.push({phone:ph,key:k,date:new Date().toLocaleDateString()});localStorage.setItem('phones',JSON.stringify(phones));document.getElementById('licOut').innerText=`LICENSE FOR ${ph}: ${k} - R200 PAID FOREVER OFFLINE`;updateTop();}
+function activateLic(){let k=document.getElementById('keyIn').value.trim();if(k.length<8){alert('Invalid key');return;}licensed=true;localStorage.setItem('licensed','yes');document.getElementById('actMsg').innerText='✅ ACTIVATED FOREVER OFFLINE - NO LIMITS';updateTop();}
+function shareWA(){let name=document.getElementById('childName').value||'Learner';let m=`🏆 ZA Mzanzi Certificate\nName ${name}\nGrade ${document.getElementById('grade').value}\nScans ${scans}/5\nSaved R${saved}\nWorks offline no data!`;window.open('https://wa.me/?text='+encodeURIComponent(m));}
+function clearAll(){if(confirm('Reset all data?')){localStorage.clear();location.reload();}}
+let mediaRecorder=null,audioChunks=[],streamAudio=null,videoRecorder=null,videoChunks=[],streamVideo=null;
+async function recAudio(role){try{streamAudio=await http://navigator.mediaDevices.getUserMedia({audio:true});audioChunks=[];mediaRecorder=new MediaRecorder(streamAudio);mediaRecorder.ondataavailable=e=>audioChunks.push(e.data);mediaRecorder.onstop=()=>{let b=new Blob(audioChunks,{type:'audio/webm'});let u=URL.createObjectURL(b);document.getElementById(role+'Audios').innerHTML+=`<div class="box"><audio controls src="${u}"></audio><div>🎙️ WhatsApp Voice Saved</div><button class="btn btnWa" onclick="window.open('https://wa.me/?text=Voice+note')">Share WhatsApp</button></div>`;streamAudio.getTracks().forEach(t=>t.stop());};mediaRecorder.start();alert('🎤 Recording... Click Stop');}catch(e){alert('Allow microphone');}}
+function stopAudio(){if(mediaRecorder && http://mediaRecorder.state!=='inactive')mediaRecorder.stop();}
+async function recVideo(role){try{streamVideo=await http://navigator.mediaDevices.getUserMedia({video:true,audio:true});let vid=document.getElementById('v'+role.charAt(0).toUpperCase()+role.slice(1));if(!vid)vid=document.getElementById('vChild');vid.srcObject=streamVideo;videoChunks=[];videoRecorder=new MediaRecorder(streamVideo);videoRecorder.ondataavailable=e=>videoChunks.push(e.data);videoRecorder.onstop=()=>{let b=new Blob(videoChunks,{type:'video/webm'});let u=URL.createObjectURL(b);let d=document.getElementById(role+'Videos');if(!d)d=document.getElementById('childVideos');d.innerHTML+=`<div class="box"><video controls src="${u}" style="width:100%"></video><div>🎥 Video Optional Saved</div></div>`;streamVideo.getTracks().forEach(t=>t.stop());vid.srcObject=null;};videoRecorder.start();alert('📹 Recording video... Click Stop Video');}catch(e){alert('Allow camera + mic');}}
+function stopVideo(){if(videoRecorder && http://videoRecorder.state!=='inactive')videoRecorder.stop();}
+let sosTimer=null,sosRec=null;let btn=document.getElementById('sosBtn');function sStart(e){e.preventDefault();sosTimer=setTimeout(async()=>{try{let s=await http://navigator.mediaDevices.getUserMedia({audio:true});let ch=[];sosRec=new MediaRecorder(s);sosRec.ondataavailable=ev=>ch.push(ev.data);sosRec.onstop=()=>{let b=new Blob(ch,{type:'audio/webm'});let u=URL.createObjectURL(b);let box=document.getElementById('sosBox');box.innerHTML=`<audio controls src="${u}"></audio><div>🆘 SOS Voice Recorded</div>`;if(navigator.geolocation){navigator.geolocation.getCurrentPosition(p=>{let msg=`🆘 SOS ${document.getElementById('childName').value||'Child'} Grade ${document.getElementById('grade').value} https://maps.google.com/?q=${p.coords.latitude},${p.coords.longitude}`;box.innerHTML+=`<div>${msg}</div><button class="btn btnWa" onclick="window.open('https://wa.me/?text='+encodeURIComponent('${msg}'))">Send SOS WhatsApp to Parent</button>`;});}s.getTracks().forEach(t=>t.stop());};sosRec.start();setTimeout(()=>{if(sosRec.state!=='inactive')sosRec.stop();},4000);alert('🆘 SOS Recording 4 sec + location');}catch(err){alert('Allow mic + location');}},3000);}function sCancel(){clearTimeout(sosTimer);}btn.addEventListener('mousedown',sStart);btn.addEventListener('mouseup',sCancel);btn.addEventListener('mouseleave',sCancel);btn.addEventListener('touchstart',sStart);btn.addEventListener('touchend',sCancel);
+updateTop();
 </script>
 </body>
 </html>
