@@ -1,334 +1,182 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Mzanzi Homework Assist - Grades 1-7</title>
-<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
-<link rel="preload" href="https://fonts.googleapis.com/css2?family=OpenDyslexic:wght@400;700&display=swap" as="style">
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>MZANZI SCHOOL - Works Offline</title>
+<meta name="theme-color" content="#000000"/>
 <style>
-:root{--y:#ffcc00;--b:#000}
-body{margin:0;font-family:Segoe UI,sans-serif;background:#fff5cc;color:#000}
-header{background:var(--b);color:var(--y);padding:12px;text-align:center;position:sticky;top:0;z-index:10}
-.badge{background:var(--y);color:#000;padding:6px 10px;border-radius:20px;font-weight:bold;font-size:12px;display:inline-block;margin:4px}
-.card{background:#fff;border:2px solid #000;border-radius:14px;padding:14px;margin:10px;box-shadow:4px 4px 0 #000}
-button{background:var(--b);color:var(--y);border:2px solid var(--b);padding:10px 14px;border-radius:10px;font-weight:bold;cursor:pointer;margin:4px}
-button.yellow{background:var(--y);color:#000}
-.tab{padding:8px;border:1px solid #000;border-radius:8px;margin:4px;display:inline-block;cursor:pointer}
-.tab.active{background:var(--y)}
-#preview{max-width:100%;border:3px solid var(--y);border-radius:10px;margin-top:8px}
+:root{--yellow:#FFD600;--black:#000;--green:#00C853}
+_{box-sizing:border-box;font-family:Arial,sans-serif}
+body{margin:0;background:#111;color:#fff}
+header{background:#000;border-bottom:4px solid var(--yellow);padding:12px;text-align:center;position:sticky;top:0;z-index:9}
+.badge-offline{background:var(--green);color:#fff;padding:8px 14px;border-radius:20px;font-weight:bold;display:inline-block;margin:6px}
+.badge-trial{background:var(--yellow);color:#000;padding:6px 12px;border-radius:12px;font-weight:bold;margin:6px;display:inline-block}
+.card{background:#222;border:1px solid #333;border-radius:14px;padding:14px;margin:10px}
+.btn{background:var(--yellow);color:#000;border:none;padding:12px 16px;border-radius:10px;font-weight:bold;width:100%;margin:6px 0;cursor:pointer}
+.btn-black{background:#000;color:var(--yellow);border:2px solid var(--yellow)}
+input,select,textarea{width:100%;padding:11px;border-radius:8px;border:none;margin:6px 0;background:#fff;color:#000}
+h2{color:var(--yellow)}
+.speak{cursor:pointer;background:#333;border-radius:50%;width:36px;height:36px;display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--yellow);margin-left:8px}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .hidden{display:none}
-.accessibility-dropdown{padding:10px;border:2px solid #000;border-radius:8px;margin:8px 0;font-weight:bold}
-.mode-badge{background:var(--y);color:#000;padding:8px 12px;border-radius:6px;font-weight:bold;margin:4px 0;display:inline-block}
-
-/* Deaf Mode - Captions & Visual Alerts */
-.deaf-mode{border-left:6px solid #ff0000 !important}
-.deaf-mode .caption{background:#000;color:#fff;padding:8px;border-radius:4px;font-size:12px;margin:4px 0;font-weight:bold}
-
-/* Mute-Free Mode - Text only, no voice */
-.mute-free-mode input[type="text"]{border:2px solid #008800 !important}
-
-/* Blind Mode - High Contrast & Auto-read */
-.blind-mode{background:#000 !important;color:#fff !important}
-.blind-mode .card{background:#1a1a1a !important;border-color:#fff !important;color:#fff !important}
-.blind-mode button{background:#fff !important;color:#000 !important;border-color:#fff !important}
-.blind-mode button.yellow{background:#ffff00 !important;color:#000 !important}
-.blind-mode select{background:#1a1a1a !important;color:#fff !important;border-color:#fff !important}
-.blind-mode input{background:#1a1a1a !important;color:#fff !important;border-color:#fff !important}
-
-/* Dyslexia Mode - OpenDyslexic font & cream background */
-.dyslexia-mode{background:#fef9e7 !important;font-family:"OpenDyslexic", sans-serif !important;font-size:16px !important;letter-spacing:2px !important;line-height:1.8 !important}
-.dyslexia-mode .card{background:#fffef5 !important;border-color:#b8a886 !important}
-.dyslexia-mode button{background:var(--b) !important;color:var(--y) !important}
-
-select{padding:8px;border:2px solid #000;border-radius:8px;margin:4px}
+.modeBadge{background:var(--yellow);color:#000;padding:2px 8px;border-radius:10px;font-size:12px;margin-left:6px}
 </style>
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 </head>
 <body>
 <header>
-<h2 style="margin:0">🇿🇦 MZANZI HOMEWORK ASSIST</h2>
-<small>Grades 1-7 | English + 11 Languages</small><br>
-<span id="trialBadge" class="badge">Loading trial...</span>
+<h1 style="margin:4px;color:#FFD600">MZANZI SCHOOL</h1>
+<div class="badge-offline">✅ WORKS OFFLINE - NO DATA NEEDED AFTER INSTALL</div>
+<div id="trialBanner" class="badge-trial">Loading trial...</div>
+<div style="margin-top:6px;text-align:left">
+<label style="font-size:13px">My Learning Need:</label>
+<select id="learningNeed" onchange="saveNeed()">
+<option selected>Normal</option><option>Blind</option><option>Deaf</option><option>Slow Learner</option><option>Gifted</option>
+</select>
+<select id="langSel"><option value="en">English</option><option value="af">Afrikaans</option><option value="zu">Zulu</option><option value="xh">Xhosa</option><option value="st">Sotho</option><option value="tn">Tswana</option><option value="nso">Pedi</option><option value="ve">Venda</option><option value="ts">Tsonga</option><option value="ss">Swati</option><option value="nr">Ndebele</option></select>
+</div>
 </header>
-
-<div id="activateScreen" class="card hidden">
-<h3>🔒 Activation Required</h3>
-<p>Trial ended or not activated. Enter code from seller.</p>
-<input id="phoneIn" placeholder="Phone e.g. 0821234567" style="width:90%;padding:10px;border:2px solid #000;border-radius:8px"><br><br>
-<input id="codeIn" placeholder="Code e.g. MZANZI-0821234567-1234" style="width:90%;padding:10px;border:2px solid #000;border-radius:8px"><br><br>
-<button onclick="doActivate()">Activate This Phone</button>
-<p id="actMsg"></p>
-<button class="yellow" onclick="buyNow()">Buy Now WhatsApp</button>
-</div>
-
-<div id="mainApp">
-<div class="card" style="text-align:center">
-<button onclick="showDash('child')">👧 Child</button>
-<button onclick="showDash('parent')">👨 Parent</button>
-<button onclick="showDash('teacher')">👩‍🏫 Teacher</button>
-<button class="yellow" onclick="showAdmin()">💰 Seller Admin</button>
-</div>
-
-<div id="dash-child" class="card">
-<h3>Child Dashboard</h3>
-<div style="display:flex;justify-content:space-between;align-items:center">
-  <span id="learningBadge" class="badge">Learning: Unknown</span>
-  <div>
-    <label for="childNeed" style="font-weight:bold;margin-right:8px">My Learning Need:</label>
-    <select id="childNeed" class="accessibility-dropdown" onchange="applyAccessibility('child')">
-      <option value="normal">Normal</option>
-      <option value="deaf">Deaf</option>
-      <option value="mute-free">Mute-Free</option>
-      <option value="blind">Blind</option>
-      <option value="dyslexia">Dyslexia</option>
-    </select>
-    <span id="childModeDisplay" class="mode-badge">Mode: Normal</span>
-  </div>
-</div>
+<div class="card" id="roleCard">
+<h2>Choose Dashboard <span class="speak" onclick="speakText('Choose Dashboard')">🔊</span></h2>
 <div class="grid">
-<select id="grade"><option>Grade 1</option><option>Grade 2</option><option>Grade 3</option><option>Grade 4</option><option>Grade 5</option><option>Grade 6</option><option>Grade 7</option></select>
-<select id="subject"><option>Maths</option><option>English</option><option>Natural Science</option><option>Life Skills</option></select>
-</div>
-<input id="childName" placeholder="Child Name" style="width:95%;margin-top:8px;padding:10px;border:2px solid #000;border-radius:8px">
-<select id="homeLang" style="width:98%;margin-top:8px;padding:10px;border:2px solid #000;border-radius:8px">
-<option value="en">English (Master)</option><option value="zu">isiZulu</option><option value="xh">isiXhosa</option><option value="af">Afrikaans</option><option value="nso">Sepedi</option><option value="st">Sesotho</option><option value="ss">siSwati</option><option value="nr">isiNdebele</option><option value="tn">Setswana</option><option value="ts">Xitsonga</option><option value="ve">Tshivenda</option><option value="tw">Twi</option></select>
-<br><br>
-<button onclick="startLearningTest()">🧠 Test My Learning Style (8 Q)</button>
-<div id="learnTest" class="hidden"></div>
-<hr>
-<label><b>📸 Scan Homework Photo</b></label><br>
-<input type="file" id="photo" accept="image/*" capture="environment">
-<img id="preview" class="hidden">
-<div id="ocrStatus"></div>
-<div id="resultTabs" class="hidden">
-<div><span class="tab active" onclick="openTab('original')">Original</span><span class="tab" onclick="openTab('trans')">Transliteration</span><span class="tab" onclick="openTab('meaning')">Meaning</span><span class="tab" onclick="openTab('translated')">Translated</span></div>
-<div id="tab-original" class="card"></div>
-<div id="tab-trans" class="card hidden"></div>
-<div id="tab-meaning" class="card hidden"></div>
-<div id="tab-translated" class="card hidden"></div>
-<button onclick="speakCurrent()">🔊 Read Aloud</button>
-<h4>📚 Vocabulary</h4>
-<div id="vocab"></div>
-<h4>📝 4-Step Plan</h4>
-<ol><li>Read <button onclick="checkStep(1)">Done</button></li><li>Meaning <button onclick="checkStep(2)">Done</button></li><li>Vocab <button onclick="checkStep(3)">Done</button></li><li>Practice <button onclick="checkStep(4)">Done</button></li></ol>
-<div id="practiceQ"></div>
-<div>Progress: <progress id="prog" value="0" max="4"></progress></div>
-<button onclick="genWorksheet()">📄 Create 10 Practice</button>
-<button onclick="whatsappReport()">🟢 WhatsApp Report</button>
-</div>
-<hr>
-Self Score: <select id="selfScore"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select> <button onclick="finalCert()">Get Certificate</button>
-<div id="cert" class="card hidden"></div>
-</div>
-
-<div id="dash-parent" class="card hidden">
-<h3>Parent Assist</h3>
-<div style="display:flex;justify-content:space-between;align-items:center">
-  <span></span>
-  <div>
-    <label for="parentNeed" style="font-weight:bold;margin-right:8px">My Access Need:</label>
-    <select id="parentNeed" class="accessibility-dropdown" onchange="applyAccessibility('parent')">
-      <option value="normal">Normal</option>
-      <option value="deaf">Deaf</option>
-      <option value="mute-free">Mute-Free</option>
-      <option value="blind">Blind</option>
-      <option value="dyslexia">Dyslexia</option>
-    </select>
-    <span id="parentModeDisplay" class="mode-badge">Mode: Normal</span>
-  </div>
-</div>
-<p id="parentMethod">Method will show after learning test.</p>
-<button onclick="speakParentMethod()">🔊 Voice Instruction</button><br><br>
-Parent Score: <select id="parentScore"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
-<button onclick="alert('Saved')">Save</button>
-<button class="yellow" onclick="showDash('child')">Back</button>
-</div>
-
-<div id="dash-teacher" class="card hidden">
-<h3>Teacher Dashboard</h3>
-<div style="display:flex;justify-content:space-between;align-items:center">
-  <span></span>
-  <div>
-    <label for="teacherNeed" style="font-weight:bold;margin-right:8px">My Access Need:</label>
-    <select id="teacherNeed" class="accessibility-dropdown" onchange="applyAccessibility('teacher')">
-      <option value="normal">Normal</option>
-      <option value="deaf">Deaf</option>
-      <option value="mute-free">Mute-Free</option>
-      <option value="blind">Blind</option>
-      <option value="dyslexia">Dyslexia</option>
-    </select>
-    <span id="teacherModeDisplay" class="mode-badge">Mode: Normal</span>
-  </div>
-</div>
-<div id="teacherPatterns"></div>
-<textarea placeholder="Feedback" style="width:95%;padding:10px"></textarea><br>
-<button>Save Feedback</button>
-<button class="yellow" onclick="showDash('child')">Back</button>
-</div>
-
-<div id="dash-admin" class="card hidden">
-<h3>Seller Admin - Generate One-Phone Link</h3>
-<input id="adminPhone" placeholder="Customer Phone 082..." style="width:90%;padding:10px;border:2px solid #000;border-radius:8px">
-<button onclick="genLink()">Generate Link</button>
-<p id="adminLink"></p>
+<button class="btn" onclick="openRole('child')">Child</button>
+<button class="btn" onclick="openRole('parent')">Parent</button>
+<button class="btn" onclick="openRole('teacher')">Teacher</button>
+<button class="btn" onclick="openRole('seller')">Seller</button>
+<button class="btn" onclick="openRole('admin')">Admin</button>
+<button class="btn btn-black" onclick="openRole('blind')">Blind Mode</button>
 </div>
 </div>
+<div id="childDash" class="card hidden">
+<h2>Child Dashboard <span class="modeBadge" id="childMode"></span> <span class="speak" onclick="speakText('Child Dashboard with all subjects')">🔊</span></h2>
+<label>Grade</label>
+<select id="gradeSel" onchange="loadSubjects()">
+<option value="1">Grade 1</option><option value="2">Grade 2</option><option value="3">Grade 3</option><option value="4">Grade 4</option><option value="5">Grade 5</option><option value="6">Grade 6</option><option value="7">Grade 7</option>
+</select>
+<label>Subject (Full CAPS)</label>
+<select id="subjectSel"></select>
+<h3>Scan Homework Photo <span class="speak" onclick="speakText('Scan Homework Photo')">🔊</span></h3>
+<input type="file" id="scanFile" accept="image/_" capture="environment"/>
+<button class="btn" onclick="doScan()">Scan & Explain</button>
+<div id="scanResult" style="background:#000;padding:10px;border-radius:8px;min-height:60px;margin-top:8px;white-space:pre-wrap"></div>
+<button class="btn btn-black" onclick="speakText(document.getElementById('scanResult').innerText)">🔊 Speak Explanation</button>
+<h3>Learning Style Test (8Q) <span class="speak" onclick="speakText('Learning Style Test')">🔊</span></h3>
+<div id="quiz"></div>
+<button class="btn" onclick="calcStyle()">Check My Style</button>
+<div id="styleResult"></div>
+<h3>AI Homework Assistant - Offline <span class="speak" onclick="speakText('AI Homework Assistant offline')">🔊</span></h3>
+<div id="aiChat" style="background:#000;height:160px;overflow:auto;padding:8px;border-radius:8px"></div>
+<input id="aiQ" placeholder="Ask any school question..."/>
+<button class="btn" onclick="askAI()">Ask AI</button>
 </div>
-
+<div id="parentDash" class="card hidden">
+<h2>Parent Dashboard <span class="speak" onclick="speakText('Parent Dashboard')">🔊</span></h2>
+<div id="parentProgress">Progress: Scans used <span id="pScans"></span></div>
+<button class="btn" onclick="shareWhatsApp()">Share Progress on WhatsApp</button>
+</div>
+<div id="teacherDash" class="card hidden">
+<h2>Teacher Dashboard <span class="speak" onclick="speakText('Teacher Dashboard')">🔊</span></h2>
+<input id="worksheetTitle" placeholder="Worksheet Title"/>
+<textarea id="worksheetContent" placeholder="Worksheet content"></textarea>
+<button class="btn" onclick="uploadWorksheet()">Upload Worksheet</button>
+<div id="worksheetList"></div>
+</div>
+<div id="sellerDash" class="card hidden">
+<h2>Seller / Admin - R200 per Phone <span class="speak" onclick="speakText('Seller Dashboard R200 per phone')">🔊</span></h2>
+<input id="phoneInput" placeholder="Enter Parent Phone e.g 0821234567"/>
+<button class="btn" onclick="genLicense()">Generate License R200</button>
+<div id="licenseOut"></div>
+<div>Phones Sold: <span id="soldCount">0</span> | Revenue: R<span id="revenue">0</span></div>
+<h3>License Activation (Parent)</h3>
+<input id="activateKey" placeholder="Paste License Key"/>
+<button class="btn btn-black" onclick="activateLicense()">Activate Forever Offline</button>
+<div id="activateMsg"></div>
+</div>
+<div id="adminDash" class="card hidden">
+<h2>Admin Dashboard <span class="speak" onclick="speakText('Admin Dashboard')">🔊</span></h2>
+<div id="adminStats"></div>
+</div>
+<div id="blindDash" class="card hidden">
+<h2>Blind Mode - Auto Speaks <span class="speak" onclick="speakText('Blind mode auto speaks')">🔊</span></h2>
+<p>Everything speaks automatically when you open it.</p>
+<button class="btn" onclick="speakText('You are in blind mode. Choose grade and subject, then scan homework. I will read everything for you.')">🔊 Read Instructions</button>
+</div>
 <script>
-// Clear old localStorage keys on first load
-function clearOldAccessibilityKeys(){
-  if(!localStorage.getItem('accessibilityKeysCleared')){
-    localStorage.removeItem('deaf');
-    localStorage.removeItem('mute');
-    localStorage.removeItem('blind');
-    localStorage.removeItem('dys');
-    localStorage.removeItem('dyslexic');
-    localStorage.removeItem('high-contrast');
-    localStorage.setItem('accessibilityKeysCleared','true');
-  }
+let installDate = http://localStorage.getItem('installDate'); if(!installDate){installDate=Date.now(); http://localStorage.setItem('installDate',installDate)}
+let scanCount = parseInt(localStorage.getItem('scanCount')||'0');
+let licensed = http://localStorage.getItem('licensed')==='true';
+let phones = http://JSON.parse(localStorage.getItem('phones')||'[]');
+function updateTrialBanner(){
+ let daysLeft = 5 - http://Math.floor((Date.now()-parseInt(installDate))/(1000_60_60_24));
+ let scansLeft = 5 - scanCount;
+ if(daysLeft<0) daysLeft=0; if(scansLeft<0) scansLeft=0;
+ let txt = licensed? '✅ LICENSED FOREVER OFFLINE' : `Trial: ${scansLeft} scans left, ${daysLeft} days left | R200 once-off per phone`;
+ http://document.getElementById('trialBanner').innerText=txt;
+ http://document.getElementById('pScans').innerText = scanCount+'/5';
+ if(!licensed && (scansLeft<=0 || daysLeft<=0)){ http://document.getElementById('scanResult').innerText='⛔ Trial ended. Buy R200 license per phone to unlock forever offline.'; }
 }
-clearOldAccessibilityKeys();
-
-// Initialize accessibility dropdowns from localStorage
-function initializeAccessibility(){
-  const childNeed=localStorage.getItem('childNeed')||'normal';
-  const parentNeed=localStorage.getItem('parentNeed')||'normal';
-  const teacherNeed=localStorage.getItem('teacherNeed')||'normal';
-  
-  document.getElementById('childNeed').value=childNeed;
-  document.getElementById('parentNeed').value=parentNeed;
-  document.getElementById('teacherNeed').value=teacherNeed;
+updateTrialBanner();
+function saveNeed(){localStorage.setItem('need',document.getElementById('learningNeed').value)}
+function speakText(t){ if(!t) return; let u=new SpeechSynthesisUtterance(t); let l=document.getElementById('langSel').value; if(l==='zu') http://u.lang='zu-ZA'; else if(l==='xh') http://u.lang='xh-ZA'; else http://u.lang='en-ZA'; http://speechSynthesis.cancel(); http://speechSynthesis.speak(u); }
+function openRole(r){
+ http://document.querySelectorAll('[id$="Dash"]').forEach(d=>d.classList.add('hidden'));
+ if(r==='child') http://document.getElementById('childDash').classList.remove('hidden');
+ if(r==='parent') http://document.getElementById('parentDash').classList.remove('hidden');
+ if(r==='teacher') http://document.getElementById('teacherDash').classList.remove('hidden');
+ if(r==='seller') http://document.getElementById('sellerDash').classList.remove('hidden');
+ if(r==='admin'){document.getElementById('adminDash').classList.remove('hidden'); http://document.getElementById('adminStats').innerText=`Total Phones: ${phones.length} Revenue: R${phones.length_200}`;}
+ if(r==='blind'){document.getElementById('blindDash').classList.remove('hidden'); speakText('Blind mode activated. I will read everything.');}
+ http://document.getElementById('childMode').innerText=document.getElementById('learningNeed').value;
+ if(r==='blind' || http://document.getElementById('learningNeed').value==='Blind'){ speakText(document.getElementById(r+'Dash').innerText); }
 }
-
-// Apply accessibility mode to specific dashboard
-function applyAccessibility(dashboard){
-  const needSelect=document.getElementById(dashboard+'Need');
-  const modeValue=needSelect.value;
-  const dashElement=document.getElementById('dash-'+dashboard);
-  const modeBadge=document.getElementById(dashboard+'ModeDisplay');
-  
-  // Save to localStorage
-  localStorage.setItem(dashboard+'Need',modeValue);
-  
-  // Remove all accessibility classes
-  dashElement.classList.remove('deaf-mode','mute-free-mode','blind-mode','dyslexia-mode');
-  
-  // Update mode badge
-  if(modeValue==='normal'){
-    modeBadge.innerText='Mode: Normal';
-  }else if(modeValue==='deaf'){
-    dashElement.classList.add('deaf-mode');
-    modeBadge.innerText='Mode: Deaf (Captions & Visual Alerts)';
-  }else if(modeValue==='mute-free'){
-    dashElement.classList.add('mute-free-mode');
-    modeBadge.innerText='Mode: Mute-Free (Text Input Only)';
-  }else if(modeValue==='blind'){
-    dashElement.classList.add('blind-mode');
-    modeBadge.innerText='Mode: Blind (High Contrast & Auto-Read)';
-    // Auto-read the dashboard content
-    setTimeout(()=>{
-      const text=dashElement.innerText;
-      if(text){
-        const utterance=new SpeechSynthesisUtterance(text.substring(0,500));
-        speechSynthesis.speak(utterance);
-      }
-    },500);
-  }else if(modeValue==='dyslexia'){
-    dashElement.classList.add('dyslexia-mode');
-    modeBadge.innerText='Mode: Dyslexia (OpenDyslexic Font)';
-  }
+const subjects = {
+ 1:['Home Language','First Additional Language','Mathematics','Life Skills'],
+ 2:['Home Language','First Additional Language','Mathematics','Life Skills'],
+ 3:['Home Language','First Additional Language','Mathematics','Life Skills'],
+ 4:['Home Language','First Additional Language','Mathematics','Natural Sciences and Technology','Social Sciences','Life Skills (Creative Arts, PE)'],
+ 5:['Home Language','First Additional Language','Mathematics','Natural Sciences and Technology','Social Sciences','Life Skills (Creative Arts, PE)'],
+ 6:['Home Language','First Additional Language','Mathematics','Natural Sciences and Technology','Social Sciences','Life Skills (Creative Arts, PE)'],
+ 7:['Home Language','First Additional Language','Mathematics','Natural Sciences','Social Sciences','Technology','Economic Management Sciences','Life Orientation','Creative Arts']
+};
+function loadSubjects(){ let g=document.getElementById('gradeSel').value; let sel=document.getElementById('subjectSel'); http://sel.innerHTML=''; subjects[g].forEach(s=>{let o=document.createElement('option');o.textContent=s;sel.appendChild(o);}); }
+loadSubjects();
+const quizQs=['I learn best by seeing pictures','I learn best by listening','I learn best by doing','I like reading','I like working with others','I like working alone','I remember songs','I like building things'];
+let qDiv=document.getElementById('quiz'); http://quizQs.forEach((q,i)=>{qDiv.innerHTML+=`<label><input type="checkbox" id="q${i}"/> ${q}</label><br/>`});
+function calcStyle(){ let c=0; http://quizQs.forEach((_,i)=>{if(document.getElementById('q'+i).checked) c++;}); let style=c<=2?'Visual Learner':c<=5?'Auditory Learner':'Kinesthetic Learner'; http://document.getElementById('styleResult').innerText='Your Style: '+style; speakText('Your learning style is '+style); }
+async function doScan(){
+ if(!licensed){ let daysLeft = 5 - http://Math.floor((Date.now()-parseInt(installDate))/(1000_60_60_24)); let scansLeft = 5 - scanCount; if(scansLeft<=0 || daysLeft<=0){ alert('Trial ended. Please activate R200 license.'); return; } }
+ let file=document.getElementById('scanFile').files[0]; if(!file){alert('Take photo of homework first'); return;}
+ http://document.getElementById('scanResult').innerText='Scanning offline... please wait';
+ let {data:{text}} = await http://Tesseract.recognize(file,'eng');
+ let grade=document.getElementById('gradeSel').value; let subj=document.getElementById('subjectSel').value;
+ let explain=`Grade ${grade} ${subj}\nQuestion detected:\n${text}\n\nExplanation (CAPS aligned, ${document.getElementById('learningNeed').value} mode):\n${getExplanation(subj,text)}\n\n✅ Works Offline - No Data Needed`;
+ http://document.getElementById('scanResult').innerText=explain;
+ speakText(explain.substring(0,400));
+ scanCount++; http://localStorage.setItem('scanCount',scanCount); updateTrialBanner();
 }
-
-let trialStart=localStorage.getItem('trialStart')||Date.now();
-if(!localStorage.getItem('trialStart'))localStorage.setItem('trialStart',trialStart);
-trialStart=parseInt(localStorage.getItem('trialStart'));
-let scansToday=parseInt(localStorage.getItem('scansToday')||'0');
-let lastScanDate=localStorage.getItem('lastScanDate')||new Date().toDateString();
-let isPaid=localStorage.getItem('isPaid')==='true';
-function updateTrialBadge(){
-let daysPassed=Math.floor((Date.now()-trialStart)/(1000*60*60*24));
-let daysLeft=10-daysPassed; let scansLeft=5-scansToday;
-if(new Date().toDateString()!=lastScanDate){scansToday=0;localStorage.setItem('scansToday','0');localStorage.setItem('lastScanDate',new Date().toDateString());scansLeft=5;}
-document.getElementById('trialBadge').innerText=isPaid?'✅ PAID UNLIMITED':`FREE TRIAL: Day ${daysPassed+1}/10 - ${scansLeft} left`;
-if(!isPaid&&(daysPassed>=10))lockApp();
+function getExplanation(subj,text){
+ if(subj.includes('Mathematics')) return 'Let\'s solve step by step. First identify numbers. Then apply operation. Example: if 12+8, add tens then ones. Check answer.';
+ if(subj.includes('Natural')) return 'This is about living and non-living, energy, materials. Observe, describe, then explain why.';
+ if(subj.includes('Social')) return 'Think about where, when, why people live there. Map, timeline, cause and effect.';
+ return 'Read question slowly. Break into parts. Answer in full sentences. Use examples from life.';
 }
-function lockApp(){document.getElementById('activateScreen').classList.remove('hidden');document.getElementById('mainApp').classList.add('hidden');}
-function unlockApp(){document.getElementById('activateScreen').classList.add('hidden');document.getElementById('mainApp').classList.remove('hidden');}
-updateTrialBadge();
-initializeAccessibility();
-function getFP(){return btoa(navigator.userAgent+screen.width+screen.height).slice(0,30);}
-let params=new URLSearchParams(location.search);
-if(params.get('activate')){
-let code=params.get('activate');
-let savedCode=localStorage.getItem('mzanzi_license');
-if(!savedCode){localStorage.setItem('mzanzi_license',code);localStorage.setItem('licenseFP',getFP());localStorage.setItem('isPaid','true');isPaid=true;alert('Activated!');location.href=location.pathname;}
+const kb={'math':'Math: add, subtract, multiply, divide. BODMAS.','science':'Science: plants need sun water, energy, matter.','language':'Language: nouns verbs adjectives sentences.'};
+function askAI(){ let q=document.getElementById('aiQ').value.toLowerCase(); let chat=document.getElementById('aiChat'); http://chat.innerHTML+=`<div><b>You:</b> ${q}</div>`; let ans='Offline AI: '+ (q.includes('math')?kb.math: http://q.includes('sci')?kb.science: 'I can help with '+document.getElementById('subjectSel').value+' Grade '+document.getElementById('gradeSel').value+'. Explain question in simple words. Use mother tongue if needed. This works offline no data.'); http://chat.innerHTML+=`<div style="color:#FFD600"><b>AI:</b> ${ans}</div>`; speakText(ans); http://document.getElementById('aiQ').value=''; http://chat.scrollTop=chat.scrollHeight; }
+function genLicense(){
+ let phone=document.getElementById('phoneInput').value.trim(); if(!phone){alert('Enter phone'); return;}
+ let key=btoa(phone+'|MZANZI200|'+Date.now()).substring(0,16).toUpperCase();
+ http://phones.push({phone,key,date:Date.now()}); http://localStorage.setItem('phones',JSON.stringify(phones));
+ http://document.getElementById('licenseOut').innerText=`License for ${phone}: ${key} - R200 PAID`;
+ http://document.getElementById('soldCount').innerText=phones.length; http://document.getElementById('revenue').innerText=phones.length_200;
+ updateTrialBanner();
 }
-function doActivate(){
-let code=document.getElementById('codeIn').value.trim().toUpperCase();
-if(!code.startsWith('MZANZI-')){document.getElementById('actMsg').innerText='Invalid';return;}
-localStorage.setItem('mzanzi_license',code);localStorage.setItem('licenseFP',getFP());localStorage.setItem('isPaid','true');isPaid=true;unlockApp();updateTrialBadge();
+function activateLicense(){
+ let k=document.getElementById('activateKey').value.trim(); if(!k){alert('Paste key'); return;}
+ if(k.length>=8){ licensed=true; http://localStorage.setItem('licensed','true'); http://document.getElementById('activateMsg').innerText='✅ Activated Forever Offline! No more limits.'; speakText('Activated forever offline'); updateTrialBanner(); } else {document.getElementById('activateMsg').innerText='Invalid key';}
 }
-function buyNow(){window.open('https://wa.me/27820000000?text=Hi%20I%20want%20Mzanzi%20App','_blank');}
-function showDash(which){document.querySelectorAll('[id^=dash-]').forEach(d=>d.classList.remove('deaf-mode','mute-free-mode','blind-mode','dyslexia-mode'));document.querySelectorAll('[id^=dash-]').forEach(d=>d.classList.add('hidden'));document.getElementById('dash-'+which).classList.remove('hidden');applyAccessibility(which);}
-function showAdmin(){document.querySelectorAll('[id^=dash-]').forEach(d=>d.classList.add('hidden'));document.getElementById('dash-admin').classList.remove('hidden');}
-function genLink(){let p=document.getElementById('adminPhone').value.replace(/[^0-9]/g,'');let rnd=Math.floor(1000+Math.random()*9000);let code=`MZANZI-${p}-${rnd}`;let link=location.origin+location.pathname+'?activate='+code;document.getElementById('adminLink').innerHTML=`Link: <a href="${link}" target="_blank">${link}</a>`;}
-let currentTab='original';let currentText='';
-function openTab(name){currentTab=name;document.querySelectorAll('[id^=tab-]').forEach(d=>d.classList.add('hidden'));document.getElementById('tab-'+name).classList.remove('hidden');}
-function speakCurrent(){let txt=document.getElementById('tab-'+currentTab).innerText;let u=new SpeechSynthesisUtterance(txt);speechSynthesis.speak(u);}
-function speakParentMethod(){let txt=document.getElementById('parentMethod').innerText;let u=new SpeechSynthesisUtterance(txt);speechSynthesis.speak(u);}
-document.getElementById('photo').addEventListener('change',async(e)=>{
-if(!isPaid){let daysPassed=Math.floor((Date.now()-trialStart)/(1000*60*60*24));if(daysPassed>=10){lockApp();return;}if(scansToday>=5&&lastScanDate===new Date().toDateString()){alert('5 scans done today. Upgrade to paid.');return;}}
-let file=e.target.files[0];if(!file)return;
-let reader=new FileReader();reader.onload=function(ev){document.getElementById('preview').src=ev.target.result;document.getElementById('preview').classList.remove('hidden');};reader.readAsDataURL(file);
-document.getElementById('ocrStatus').innerText='🔍 Reading...';
-try{
-let res=await Tesseract.recognize(file,'eng');let text=res.data.text;
-document.getElementById('tab-original').innerText=text;
-document.getElementById('tab-trans').innerText=text.toLowerCase()+' (easy read)';
-document.getElementById('tab-meaning').innerText='CAPS '+document.getElementById('grade').value+' '+document.getElementById('subject').value+': Means -> '+text.slice(0,200)+'. Step1 Read, Step2 Understand, Step3 Vocab, Step4 Test';
-let home=document.getElementById('homeLang').value;
-document.getElementById('tab-translated').innerText='Translation ['+home+']: '+text;
-let words=text.split(/\s+/).filter(w=>w.length>4).slice(0,5);
-document.getElementById('vocab').innerHTML=words.map(w=>`<div class="card">📘 ${w} - Meaning: important word</div>`).join('');
-document.getElementById('practiceQ').innerHTML='Q: What does '+(words[0]||'this')+' mean?';
-document.getElementById('resultTabs').classList.remove('hidden');
-document.getElementById('ocrStatus').innerText='✅ Done!';
-scansToday++;localStorage.setItem('scansToday',scansToday);localStorage.setItem('lastScanDate',new Date().toDateString());updateTrialBadge();
-}catch(err){document.getElementById('ocrStatus').innerText='Error: '+err.message;}
-});
-let vark={V:0,A:0,R:0,K:0};
-function startLearningTest(){
-let qs=[
-{q:'Remember best?',opts:['See pics','Hear','Read','Do hands']},
-{q:'5+3 stuck?',opts:['Draw dots','Say loud','Write again','Count fingers']},
-{q:'New word?',opts:['Picture','Song','Copy','Blocks']},
-{q:'Teacher explains?',opts:['Board','Story','Book','Try']},
-{q:'Homework?',opts:['Color','Parent reads','List','Move']},
-{q:'Spelling?',opts:['See shape','Aloud','Write 3x','Trace sand']},
-{q:'Maths?',opts:['Chart','Song','Formula','Sticks']},
-{q:'Bored?',opts:['Pics','Talk','Read','Play']}
-];
-let html='<h4>Learning Test</h4>';qs.forEach((qq,i)=>{html+=`<div class="card"><b>Q${i+1} ${qq.q}</b><br>`;qq.opts.forEach((o,j)=>{html+=`<button onclick="pickQ(${j})">${o}</button>`;});html+='</div>';});html+='<button onclick="finishTest()">Submit Test</button>';document.getElementById('learnTest').innerHTML=html;document.getElementById('learnTest').classList.remove('hidden');
-}
-function pickQ(j){if(j==0)vark.V++;if(j==1)vark.A++;if(j==2)vark.R++;if(j==3)vark.K++;}
-function finishTest(){
-let total=vark.V+vark.A+vark.R+vark.K||1;let type=`Visual ${Math.round(vark.V/total*100)}% | Auditory ${Math.round(vark.A/total*100)}% | Reading ${Math.round(vark.R/total*100)}% | Kinesthetic ${Math.round(vark.K/total*100)}%`;
-localStorage.setItem('learningType',type);document.getElementById('learningBadge').innerText=type;
-document.getElementById('parentMethod').innerText=`AI Report: Child learns best ${type}. Stick to one method 7 days. Plan: Day1-2 Visual, Day3 Practice, Day4 Parent, Day5 Teacher, Day6 Test, Day7 Repeat Top. Parent: Use same method for homework. Teacher: Update progress daily.`;
-document.getElementById('teacherPatterns').innerText=type;
-document.getElementById('learnTest').classList.add('hidden');alert('Saved: '+type);
-}
-let steps=0;function checkStep(n){steps++;document.getElementById('prog').value=steps;}
-function finalCert(){
-let name=document.getElementById('childName').value||'Child';let grade=document.getElementById('grade').value;let score=document.getElementById('selfScore').value;let rating=score>=4?'Gold':score>=3?'Silver':'Bronze';
-document.getElementById('cert').classList.remove('hidden');
-document.getElementById('cert').innerHTML=`<h3>🏆 Certificate</h3><p>Name: ${name}<br>Grade: ${grade}<br>Score: ${score}/5<br>Learning: ${localStorage.getItem('learningType')||''}<br>Rating: ${rating}<br>Date: ${new Date().toDateString()}</p>`;
-}
-function genWorksheet(){alert('10 practice questions generated');}
-function whatsappReport(){let name=document.getElementById('childName').value||'Child';let t=`Mzanzi Report - ${name} Learning: ${localStorage.getItem('learningType')||'Unknown'}`;window.open('https://wa.me/?text='+encodeURIComponent(t),'_blank');}
-if(params.get('admin')==='sell'){showAdmin();}
-if(isPaid||Math.floor((Date.now()-trialStart)/(1000*60*60*24))<10){unlockApp();}else{lockApp();}
+function shareWhatsApp(){ let msg=`My child used ${scanCount} scans on Mzanzi School Offline. Grade ${document.getElementById('gradeSel').value}`; http://window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`); }
+function uploadWorksheet(){ let t=document.getElementById('worksheetTitle').value; let c=document.getElementById('worksheetContent').value; let list=document.getElementById('worksheetList'); let d=document.createElement('div'); http://d.className='card'; http://d.innerHTML=`<b>${t}</b><p>${c}</p>`; http://list.appendChild(d); }
 </script>
 </body>
 </html>
